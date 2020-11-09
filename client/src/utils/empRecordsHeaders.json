@@ -1,0 +1,47 @@
+[
+    {
+        "Header": "Staff",
+        "accessor": "employee_name",
+        "width": 200
+    },
+    {
+        "Header": "Process Prime",
+        "accessor": "process_prime_qty"
+    },
+    {
+        "Header": "Process Rapid",
+        "accessor": "process_rapid_qty"
+    },
+    {
+        "Header": "Add Inventory",
+        "accessor": "add_inventory_qty"
+    },
+    {
+        "Header": "Cases Processed",
+        "accessor": "bulk_cases_processed_qty"
+    },
+    {
+        "Header": "Cases Labeled",
+        "accessor": "bulk_cases_labeled_qty"
+    },
+    {
+        "Header": "Item Labeled",
+        "accessor": "items_labeled_qty"
+    },
+    {
+        "Header": "Process Removal",
+        "accessor": "processed_removal_qty"
+    },
+    {
+        "Header": "Audit Locations",
+        "accessor": "audit_locations_qty"
+    },
+    {
+        "Header": "Process Returns",
+        "accessor": "process_returns_qty"
+    },
+    {
+        "Header": "Process OnSite",
+        "accessor": "process_onsite_qty"
+    }
+]

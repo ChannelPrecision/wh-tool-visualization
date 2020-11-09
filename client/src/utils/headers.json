@@ -1,0 +1,176 @@
+[
+    {
+        "Header": "Date",
+        "accessor": "firstName"
+    },
+    {
+        "Header": "Process Prime",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Process Rapid",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Add Inventory",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Case Processed",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Case Labeled",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Items Labeled",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Process Removal",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Audit Locations",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Process Returns",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    },
+    {
+        "Header": "Process OnSite",
+        "columns": [
+            {
+                "Header": "Qty",
+                "accessor": "firstName"
+            },
+            {
+                "Header": "Time",
+                "id": "lastName"
+            },
+            {
+                "Header": "AVG",
+                "id": "lastName"
+            }
+        ]
+    }
+]
