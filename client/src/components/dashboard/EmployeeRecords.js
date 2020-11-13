@@ -12,10 +12,10 @@ const EmployeeRecords = ({ dates, employeeRecords, resp: { datas, loading } }) =
 
     useEffect(() => {
         employeeRecords(dates, warehouse);
-    }, [dates, warehouse]);
+    }, [dates, warehouse, employeeRecords]);
 
     const onChange = e => {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         setWarehouse(e.target.value)
     };
 

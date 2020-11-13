@@ -1,19 +1,46 @@
-import React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import React, { useState, useEffect } from 'react';
+// import { PieChart } from 'react-minimal-pie-chart';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { taskRecords } from '../../actions/responses';
 
-const TaskRecords = () => {
+import CanvasJSReact from '../../canvasjs.react';
+// const CanvasJS = CanvasJSReact.CanvasJS;
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-    const data = [
-        { title: 'One', value: 10, color: '#E38627' },
-        { title: 'Two', value: 15, color: '#C13C37' },
-        { title: 'Three', value: 20, color: '#6A2135' },
-    ];
+const TaskRecords = ({ dates, taskRecords, resp: { tasks, loading } }) => {
+    const [task, setTask] = useState('processPrime');
+
+    useEffect(() => {
+        taskRecords(dates);
+    }, [dates, taskRecords]);
+
+    const dataValue = tasks.map((res) => ({
+        'label': res.employee_name,
+        'y': res[task]
+    }));
+
+    const options = {
+        data: [{
+            type: "pie",
+            legendText: "{label}",
+            toolTipContent: "{label}: <strong>{y}</strong>",
+            indexLabel: "{y}",
+            indexLabelPlacement: "inside",
+            startAngle: -90,
+            dataPoints: dataValue
+        }]
+    }
+
+    const onChange = e => {
+        setTask(e.target.value)
+    };
 
     return (
         <div>
-            <p>Task Records</p>
+            <p><strong>Task Records</strong></p>
             <div className="text-center">
-                <select className="ui dropdown selection" style={{ width: '250px' }}>
+                <select className="ui dropdown selection" style={{ width: '250px' }} onChange={e => onChange(e)}>
                     <option value="processPrime">Process Prime</option>
                     <option value="processRapid">Process Rapid</option>
                     <option value="addInventory">Add Inventory</option>
@@ -26,14 +53,29 @@ const TaskRecords = () => {
                     <option value="processOnsite">Process Onsite</option>
                 </select>
             </div>
-            <PieChart
+            {/* <PieChart
                 data={data}
                 radius={18}
                 center={[50, 25]}
                 viewBoxSize={[100, 44.5]}
+                label={({ dataEntry }) => `${Math.round(dataEntry.percentage, 2)}%`}
+                labelStyle={{
+                    ...defaultLabelStyle,
+                }}
+            /> */}
+            <CanvasJSChart options={options}
             />
         </div>
     )
 };
 
-export default TaskRecords;
+TaskRecords.propTypes = {
+    taskRecords: PropTypes.func.isRequired,
+    resp: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    resp: state.responses
+})
+
+export default connect(mapStateToProps, { taskRecords })(TaskRecords);

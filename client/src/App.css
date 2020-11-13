@@ -582,3 +582,10 @@ button {
 .ReactTable {
   text-align: center;
 }
+
+.rthfc.-sp .rthfc-th-fixed,
+.rthfc.-sp .rthfc-td-fixed {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: auto;
+}

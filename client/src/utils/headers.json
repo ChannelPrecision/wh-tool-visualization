@@ -1,22 +1,25 @@
 [
     {
         "Header": "Date",
-        "accessor": "firstName"
+        "accessor": "taskDate"
+    },
+    {
+        "Header": "Staff",
+        "accessor": "employee_name"
     },
     {
         "Header": "Process Prime",
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "process_prime_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "process_prime_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -25,15 +28,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "process_rapid_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "process_rapid_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -42,15 +44,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "add_inventory_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "add_inventory_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -59,15 +60,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "bulk_cases_processed_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "bulk_cases_processed_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -76,15 +76,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "bulk_cases_labeled_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "bulk_cases_labeled_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -93,15 +92,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "items_labeled_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "items_labeled_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -110,15 +108,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "process_removal_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "process_removal_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -127,15 +124,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "audit_locations_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "audit_locations_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -144,15 +140,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "process_returns_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "process_returns_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     },
@@ -161,15 +156,14 @@
         "columns": [
             {
                 "Header": "Qty",
-                "accessor": "firstName"
+                "accessor": "process_onsite_qty"
             },
             {
                 "Header": "Time",
-                "id": "lastName"
+                "accessor": "process_onsite_time"
             },
             {
-                "Header": "AVG",
-                "id": "lastName"
+                "Header": "AVG"
             }
         ]
     }

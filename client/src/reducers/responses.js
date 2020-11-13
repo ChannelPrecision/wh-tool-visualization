@@ -1,8 +1,12 @@
-import { GET_STAFF, DATA_ERROR, EMPLOYEE_RECORDS } from '../actions/types';
+import { GET_STAFF, DATA_ERROR, EMPLOYEE_RECORDS, EMPLOYEE_AVERAGE, GET_PRODUCTIVITY, TASK_RECORDS, TASK_AVERAGE } from '../actions/types';
 
 const initialState = {
     staff: [],
     datas: [],
+    avgs: [],
+    productivities: [],
+    tasks: [],
+    taskAvg: [],
     loading: true,
     error: {}
 };
@@ -21,6 +25,30 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 datas: payload,
+                loading: false
+            }
+        case EMPLOYEE_AVERAGE:
+            return {
+                ...state,
+                avgs: payload,
+                loading: false
+            }
+        case GET_PRODUCTIVITY:
+            return {
+                ...state,
+                productivities: payload,
+                loading: false
+            }
+        case TASK_RECORDS:
+            return {
+                ...state,
+                tasks: payload,
+                loading: false
+            }
+        case TASK_AVERAGE:
+            return {
+                ...state,
+                taskAvg: payload,
                 loading: false
             }
         case DATA_ERROR:

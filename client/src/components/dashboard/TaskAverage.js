@@ -1,25 +1,56 @@
-import React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import React, { Fragment, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { taskAverage } from '../../actions/responses';
 
-const TaskAverage = () => {
+import CanvasJSReact from '../../canvasjs.react';
+// const CanvasJS = CanvasJSReact.CanvasJS;
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-    const data = [
-        { title: 'One', value: 10, color: '#E38627' },
-        { title: 'Two', value: 15, color: '#C13C37' },
-        { title: 'Three', value: 20, color: '#6A2135' },
-    ];
+const TaskAverage = ({ dates, taskAverage, resp: { taskAvg, loading } }) => {
+    useEffect(() => {
+        taskAverage(dates);
+    }, [dates, taskAverage]);
+
+    const dataValue = taskAvg.length > 0 ? Object.entries(taskAvg[0]).map((res) => ({
+        'label': res[0],
+        'y': res[1]
+    })) : [];
+
+    const options = {
+        animationEnabled: true,
+        theme: "light2",
+        axisX: {
+            title: "Task",
+            reversed: true,
+        },
+        axisY: {
+            title: "Average",
+            includeZero: true
+        },
+        data: [{
+            type: "bar",
+            dataPoints: dataValue
+        }]
+    }
 
     return (
-        <div>
-            <p>Task Average</p>
-            <PieChart
-                data={data}
-                radius={20}
-                center={[50, 25]}
-                viewBoxSize={[100, 50]}
+        <Fragment>
+            <p style={{ marginBottom: "50px" }}><strong>Task Average</strong></p>
+            <CanvasJSChart options={options}
+            /* onRef = {ref => this.chart = ref} */
             />
-        </div>
+        </Fragment>
     )
 };
 
-export default TaskAverage;
+TaskAverage.propTypes = {
+    taskAverage: PropTypes.func.isRequired,
+    resp: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    resp: state.responses
+});
+
+export default connect(mapStateToProps, { taskAverage })(TaskAverage);

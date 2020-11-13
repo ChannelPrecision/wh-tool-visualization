@@ -10,3 +10,7 @@ export const LOGOUT = 'LOGOUT';
 export const DATA_ERROR = 'DATA_ERROR';
 export const GET_STAFF = 'GET_STAFF';
 export const EMPLOYEE_RECORDS = 'EMPLOYEE_RECORDS';
+export const EMPLOYEE_AVERAGE = 'EMPLOYEE_AVERAGE';
+export const GET_PRODUCTIVITY = 'GET_PRODUCTIVITY';
+export const TASK_RECORDS = 'TASK_RECORDS';
+export const TASK_AVERAGE = 'TASK_AVERAGE';

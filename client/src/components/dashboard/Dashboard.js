@@ -25,9 +25,9 @@ const Dashboard = () => {
                 </div>
             </div>
             <ProductivityTable dates={date} />
-            <TaskRecord />
+            <TaskRecord dates={date} />
             <EmployeeRecords dates={date} />
-            <EmployeeAverage />
+            <EmployeeAverage dates={date} />
         </Fragment>
     )
 }
