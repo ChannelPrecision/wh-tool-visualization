@@ -1,12 +1,12 @@
-
-const config = require('config');
+// const config = require('config');
 const mysql = require('mysql');
+const ck = require('ckey');
 
 const connection = {
-    host: config.get('dbhost'),
-    user: 'israel_olaguer',
-    password: config.get('dbpassword'),
-    database: 'data_tools',
+    host: ck.dbhost,
+    user: ck.dbuser,
+    password: ck.dbpassword,
+    database: 'efficiency_report',
     multipleStatements: true
 };
 

@@ -11,8 +11,8 @@ const Landing = ({ isAutenticated }) => {
         <section className="landing">
             <div className="dark-overlay">
                 <div className="landing-inner">
-                    <h1 className="x-large">Project A</h1>
-                    <p className="lead">Customize and create your own project. Enjoy!</p>
+                    <h1 className="x-large">Efficiency Report</h1>
+                    <p className="lead">Welcome</p>
                 </div>
             </div>
         </section>
