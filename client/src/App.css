@@ -589,3 +589,7 @@ button {
   position: sticky;
   z-index: auto;
 }
+
+.react-daterange-picker__calendar {
+  z-index: 4;
+}
