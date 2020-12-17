@@ -593,3 +593,47 @@ button {
 .react-daterange-picker__calendar {
   z-index: 4;
 }
+
+.top-box {
+  display: block;
+  /* color: #fff; */
+  font-size: 13px;
+  padding: 0 0 0 20px;
+  border: 1px solid #f07622;
+  border-radius: 5px 5px 0 0;
+  background-color: #f07622;
+  height: 35px;
+  width: auto;
+}
+
+.top-box > p {
+  margin-top: 8px;
+}
+
+.top-box > .ui.grid {
+  margin-top: 10px;
+}
+
+.task-wrapper {
+  border: 1px solid #dadce0;
+  background-color: #fff;
+  border-radius: 5px;
+  width: 610px;
+  height: 130px;
+  margin: 10px auto auto;
+}
+
+/* .ui.segment {
+  width: 650px;
+  margin: 10px auto auto;
+  background-color: #FBFCFC;
+} */
+
+.qtyInput > input {
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  transition: .3s;
+  outline: none;
+  width: 100px;
+}

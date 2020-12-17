@@ -138,4 +138,32 @@ router.post('/task_average/:startDate/:endDate', async (req, res) => {
     }
 });
 
+//get all employee name
+router.get('/employees', async (req, res) => {
+    const sql = `select employee_name, warehouse_location from efficiency_report.responses where employee_name <> ',' group by employee_name`;
+    try {
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json(err);
+            res.status(200).json(results);
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.post('/employee/:name', async (req, res) => {
+    const sql = `select *,DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate from efficiency_report.responses where employee_name = '${req.params.name}' order by id desc`;
+
+    try {
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json(err);
+            res.status(200).json(results);
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;

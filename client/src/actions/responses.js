@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { format } from 'date-fns';
 
-import { GET_STAFF, DATA_ERROR, EMPLOYEE_RECORDS, EMPLOYEE_AVERAGE, GET_PRODUCTIVITY, TASK_RECORDS, TASK_AVERAGE } from './types';
+import { GET_STAFF, DATA_ERROR, EMPLOYEE_RECORDS, EMPLOYEE_AVERAGE, GET_PRODUCTIVITY, TASK_RECORDS, TASK_AVERAGE, EMPLOYEE_NAMES, EMPLOYEE } from './types';
 
 export const getStaff = date => async dispatch => {
     try {
@@ -108,6 +108,38 @@ export const taskAverage = date => async dispatch => {
             payload: res.data
         });
 
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const employeeNames = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/responses/employees');
+
+        dispatch({
+            type: EMPLOYEE_NAMES,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const employee = name => async dispatch => {
+    try {
+        const res = await axios.post(`/api/responses/employee/${name}`);
+        dispatch({
+            type: EMPLOYEE,
+            payload: res.data
+        });
     } catch (err) {
         dispatch({
             type: DATA_ERROR,

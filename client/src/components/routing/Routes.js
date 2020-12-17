@@ -6,6 +6,8 @@ import Alert from '../layout/Alert';
 import Dashboard from '../dashboard/Dashboard';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from './PrivateRoute';
+import Form from '../form/Form';
+import Responses from '../responses/Responses';
 
 const Routes = () => {
     return (
@@ -15,6 +17,8 @@ const Routes = () => {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/form" component={Form} />
+                <PrivateRoute exact path="/responses" component={Responses} />
                 <Route component={NotFound} />
             </Switch>
         </section>

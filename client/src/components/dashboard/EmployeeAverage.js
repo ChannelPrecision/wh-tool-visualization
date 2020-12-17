@@ -11,7 +11,7 @@ const EmployeeAverage = ({ dates, employeeAverage, resp: { avgs, loading } }) =>
 
     useEffect(() => {
         employeeAverage(dates, warehouse);
-    }, [dates, warehouse, employeeAverage]);
+    }, []);
 
     const onChange = e => {
         setWarehouse(e.target.value)
