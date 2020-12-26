@@ -28,7 +28,7 @@ const Login = ({ login, isAuthenticated }) => {
         <Fragment>
             <div className="ui segment" style={
                 {
-                    height: '35vh', textAlign: 'center', width: '600px', float: 'middle', justifyContent: 'center',
+                    textAlign: 'center', width: '600px', float: 'middle', justifyContent: 'center',
                     display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px'
                 }
             }>
