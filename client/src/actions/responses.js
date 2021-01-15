@@ -1,7 +1,21 @@
 import axios from 'axios';
 import { format } from 'date-fns';
+import { setAlert } from './alert'
 
-import { GET_STAFF, DATA_ERROR, EMPLOYEE_RECORDS, EMPLOYEE_AVERAGE, GET_PRODUCTIVITY, TASK_RECORDS, TASK_AVERAGE, EMPLOYEE_NAMES, EMPLOYEE } from './types';
+import {
+    GET_STAFF,
+    DATA_ERROR,
+    EMPLOYEE_RECORDS,
+    EMPLOYEE_AVERAGE,
+    GET_PRODUCTIVITY,
+    TASK_RECORDS,
+    TASK_AVERAGE,
+    EMPLOYEE_NAMES,
+    EMPLOYEE,
+    RESPONSE,
+    TASK_RECORD,
+    UPDATE_TASK
+} from './types';
 
 export const getStaff = date => async dispatch => {
     try {
@@ -140,6 +154,96 @@ export const employee = name => async dispatch => {
             type: EMPLOYEE,
             payload: res.data
         });
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const response = (formData) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const res = await axios.post('/api/profile/resp', formData, config);
+
+        dispatch({
+            type: RESPONSE,
+            payload: res.data
+        });
+
+    } catch (err) {
+        const errors = err.response.data.errors;
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        })
+    }
+};
+
+export const taskRecord = id => async dispatch => {
+    try {
+        const res = await axios.get(`/api/responses/task_record/${id}`);
+
+        dispatch({
+            type: TASK_RECORD,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const deleteTask = id => async dispatch => {
+    try {
+        const res = await axios.delete(`/api/responses/delete_task/${id}`);
+
+        dispatch({
+            type: UPDATE_TASK,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Task Removed', 'success'));
+
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const updateRecord = (id, formData) => async dispatch => {
+    try {
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        dispatch(setAlert('Response Updated', 'success'));
+
+        const res = await axios.post(`/api/responses/update/${id}`, formData, config);
+
+        dispatch({
+            type: UPDATE_TASK,
+            payload: res.data
+        });
+
+
     } catch (err) {
         dispatch({
             type: DATA_ERROR,

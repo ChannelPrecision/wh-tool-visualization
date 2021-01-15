@@ -1,8 +1,34 @@
 [
     {
+        "Header": "Actions",
+        "columns": [
+            {
+                "Header": "Edit",
+                "accessor": "id",
+                "width": 50,
+                "Cell": "props => <i className='ui close icon'></i>"
+            },
+            {
+                "Header": "Delete",
+                "accessor": "id",
+                "width": 50
+            }
+        ]
+    },
+    {
         "Header": "Date",
-        "accessor": "taskDate",
-        "width": 120
+        "columns": [
+            {
+                "Header": "Submitted",
+                "accessor": "submittedDate",
+                "width": 100
+            },
+            {
+                "Header": "Task",
+                "accessor": "taskDate",
+                "width": 100
+            }
+        ]
     },
     {
         "Header": "Process Prime",

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../config/connectDb');
+const auth = require('../../middleware/auth');
 
 router.post('/staff/:startDate/:endDate', async (req, res) => {
     const sql = `select distinct employee_name from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' order by employee_name asc`;
@@ -138,6 +139,35 @@ router.post('/task_average/:startDate/:endDate', async (req, res) => {
     }
 });
 
+//get task by id
+router.get('/task_record/:id', async (req, res) => {
+    const sql = `select *,DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate from efficiency_report.responses where id = ${req.params.id}`;
+
+    try {
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json(err);
+            res.status(200).json(results);
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+//delete task by id
+router.delete('/delete_task/:id', async (req, res) => {
+    const sql = `delete from efficiency_report.responses where id = ${req.params.id}`;
+
+    try {
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json(err);
+            res.status(200).json({ msg: 'Task Deleted' });
+        })
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
+});
+
 //get all employee name
 router.get('/employees', async (req, res) => {
     const sql = `select employee_name, warehouse_location from efficiency_report.responses where employee_name <> ',' group by employee_name`;
@@ -153,7 +183,7 @@ router.get('/employees', async (req, res) => {
 });
 
 router.post('/employee/:name', async (req, res) => {
-    const sql = `select *,DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate from efficiency_report.responses where employee_name = '${req.params.name}' order by id desc`;
+    const sql = `select *,DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate, DATE_FORMAT(submitted_date, "%Y-%m-%d") as submittedDate from efficiency_report.responses where employee_name = '${req.params.name}' order by id desc`;
 
     try {
         db.query(sql, (err, results) => {
@@ -165,5 +195,53 @@ router.post('/employee/:name', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+//update response
+router.post('/update/:id', async (req, res) => {
+    const sql = `UPDATE efficiency_report.responses
+    SET process_prime_qty = ?, process_prime_time = ?,
+    process_rapid_qty = ?, process_rapid_time = ?, add_inventory_qty = ?, add_inventory_time = ?, bulk_cases_processed_qty = ?,
+    bulk_cases_processed_time = ?, bulk_cases_labeled_qty = ?, bulk_cases_labeled_time = ?, items_labeled_qty = ?,
+    items_labeled_time = ?, processed_removal_qty = ?, processed_removal_time = ?, process_returns_qty = ?, process_returns_time = ?,
+    audit_locations_qty = ?, audit_locations_time = ?, process_onsite_qty = ?, process_onsite_time = ?
+    WHERE id = ?`;
+
+    const { process_prime_qty, process_prime_time, process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time,
+        bulk_cases_processed_qty, bulk_cases_processed_time, bulk_cases_labeled_qty, bulk_cases_labeled_time,
+        items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
+        process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time,
+        process_onsite_qty, process_onsite_time
+    } = req.body;
+
+    const data = [process_prime_qty, process_prime_time, process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time,
+        bulk_cases_processed_qty, bulk_cases_processed_time, bulk_cases_labeled_qty, bulk_cases_labeled_time,
+        items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
+        process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time,
+        process_onsite_qty, process_onsite_time, req.params.id];
+
+    console.log(data);
+
+    try {
+        db.query(sql, data, (err, results) => {
+            if (err) return res.status(500).json(err);
+            console.log(results);
+            res.status(200).json(results);
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+})
+
+// router.post('/resp', [auth, [
+//     check('taskDate', 'Date is required').not().isEmpty()
+// ]], async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//         return res.status(400).json({ errors: errors.array() });
+//     }
+
+//     console.log(JSON.stringify(req.body));
+// });
 
 module.exports = router;

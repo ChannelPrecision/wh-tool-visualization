@@ -7,7 +7,10 @@ import Dashboard from '../dashboard/Dashboard';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from './PrivateRoute';
 import Form from '../form/Form';
+import Form2 from '../form/Form2';
 import Responses from '../responses/Responses';
+import DeleteResponse from '../responses/DeleteResponse';
+import EditResponse from '../responses/Edit2';
 
 const Routes = () => {
     return (
@@ -18,7 +21,10 @@ const Routes = () => {
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/form" component={Form} />
+                <Route exact path="/form2" component={Form2} />
                 <PrivateRoute exact path="/responses" component={Responses} />
+                <PrivateRoute exact path="/response/delete/:id" component={DeleteResponse} />
+                <PrivateRoute exact path="/response/edit/:id" component={EditResponse} />
                 <Route component={NotFound} />
             </Switch>
         </section>

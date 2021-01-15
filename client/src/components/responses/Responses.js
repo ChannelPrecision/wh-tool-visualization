@@ -30,7 +30,7 @@ const Responses = ({ employeeNames, resp: { employees, loading } }) => {
         // let empName = `${el.warehouse_location} - ${el.employee_name}`;
         return (
             <Fragment>
-                <Menu.Item
+                <Menu.Item key={index}
                     name={el.employee_name}
                     active={item === el.employee_name}
                     onClick={() => setItem(el.employee_name)}

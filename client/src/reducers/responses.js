@@ -1,4 +1,17 @@
-import { GET_STAFF, DATA_ERROR, EMPLOYEE_RECORDS, EMPLOYEE_AVERAGE, GET_PRODUCTIVITY, TASK_RECORDS, TASK_AVERAGE, EMPLOYEE_NAMES, EMPLOYEE } from '../actions/types';
+import {
+    GET_STAFF,
+    DATA_ERROR,
+    EMPLOYEE_RECORDS,
+    EMPLOYEE_AVERAGE,
+    GET_PRODUCTIVITY,
+    TASK_RECORDS,
+    TASK_AVERAGE,
+    EMPLOYEE_NAMES,
+    EMPLOYEE,
+    RESPONSE,
+    TASK_RECORD,
+    UPDATE_TASK
+} from '../actions/types';
 
 const initialState = {
     staff: [],
@@ -6,9 +19,11 @@ const initialState = {
     avgs: [],
     productivities: [],
     tasks: [],
+    task: [],
     taskAvg: [],
     employees: [],
     emp: [],
+    response: [],
     loading: true,
     error: {}
 };
@@ -21,6 +36,13 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 staff: payload,
+                loading: false
+            }
+        case RESPONSE:
+        case UPDATE_TASK:
+            return {
+                ...state,
+                response: payload,
                 loading: false
             }
         case EMPLOYEE_RECORDS:
@@ -63,6 +85,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 emp: payload,
+                loading: false
+            }
+        case TASK_RECORD:
+            return {
+                ...state,
+                task: payload,
                 loading: false
             }
         case DATA_ERROR:

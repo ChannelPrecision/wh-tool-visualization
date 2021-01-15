@@ -11,7 +11,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 const Dashboard = () => {
     const d = new Date();
-    const [date, setDate] = useState([d.setDate(d.getDate() - 7), new Date()]);
+    const [date, setDate] = useState([d.setDate(d.getDate() - 15), new Date()]);
 
     return (
         <Fragment>

@@ -16,3 +16,6 @@ export const TASK_RECORDS = 'TASK_RECORDS';
 export const TASK_AVERAGE = 'TASK_AVERAGE';
 export const EMPLOYEE_NAMES = 'EMPLOYEE_NAMES';
 export const EMPLOYEE = 'EMPLOYEE';
+export const RESPONSE = 'RESPONSE';
+export const TASK_RECORD = 'TASK_RECORD';
+export const UPDATE_TASK = 'UPDATE_TASK';
