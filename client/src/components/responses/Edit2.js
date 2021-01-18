@@ -34,7 +34,17 @@ const Edit2 = ({ location: { params: { original } }, history, updateRecord }) =>
 
     const renderTitle = 'Edit Response';
 
-    const renderActions = () => (<button onClick={e => onSubmit(e)} className="ui button primary" type="button">Submit</button>);
+    const renderActions = () => (
+        <Fragment>
+            <button onClick={() => cancel()} className="ui button" type="button">Close</button>
+            <button onClick={e => onSubmit(e)} className="ui button primary" type="button">Submit</button>
+        </Fragment>
+
+    );
+
+    const cancel = () => {
+        history.push('/responses')
+    };
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
