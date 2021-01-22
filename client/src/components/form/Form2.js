@@ -3,10 +3,16 @@ import { Accordion, Icon } from 'semantic-ui-react';
 import TimeField from 'react-simple-timefield';
 import moment from 'moment';
 
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { addTask } from '../../actions/responses';
+
 import 'semantic-ui-css/semantic.min.css';
 
 
-const Form2 = () => {
+const Form2 = ({ addTask }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [formData, setFormData] = useState({
         taskDate: '',
@@ -40,6 +46,8 @@ const Form2 = () => {
 
     const onSubmit = e => {
         e.preventDefault();
+        console.log('submitted')
+        addTask(formData);
     }
 
     console.log(formData);
@@ -75,7 +83,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="process_prime_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="process_rapid_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +108,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="process_rapid_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="process_rapid_time" value={formData.process_rapid_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +133,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="add_inventory_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="add_inventory_time" value={formData.add_inventory_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -143,13 +151,13 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Quantity</p>
                                     <div className="qtyInput">
-                                        <input type="text" placeholder="0" name="case_processed_qty" onChange={e => onChange(e)} />
+                                        <input type="text" placeholder="0" name="bulk_cases_processed_qty" onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="case_processed_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="bulk_cases_processed_time" value={formData.bulk_cases_processed_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -167,13 +175,13 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Quantity</p>
                                     <div className="qtyInput">
-                                        <input type="text" placeholder="0" name="case_labeled_qty" onChange={e => onChange(e)} />
+                                        <input type="text" placeholder="0" name="bulk_cases_labeled_qty" onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="case_labeled_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="bulk_cases_labeled_time" value={formData.bulk_cases_labeled_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +205,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="items_labeled_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="items_labeled_time" value={formData.items_labeled_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +229,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="processed_removal_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="processed_removal_time" value={formData.processed_removal_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +253,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="process_returns_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="process_returns_time" value={formData.process_returns_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +277,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="audit_locations_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="audit_locations_time" value={formData.audit_locations_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -293,7 +301,7 @@ const Form2 = () => {
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="process_onsite_time" value={formData.process_prime_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="process_onsite_time" value={formData.process_onsite_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -301,11 +309,15 @@ const Form2 = () => {
                     </Accordion>
                 </div>
                 <div className="text-center" style={{ paddingTop: '20px', marginBottom: '50px' }}>
-                    <input type="submit" className="ui primary button" />
+                    <input style={{ width: '200px', height: '40px', textAlign: 'center' }} type="submit" className="ui primary button" />
                 </div>
             </form>
         </Fragment>
     )
 };
 
-export default Form2;
+Form2.propTypes = {
+    addTask: PropTypes.object.isRequired
+}
+
+export default connect(null, { addTask })(Form2);

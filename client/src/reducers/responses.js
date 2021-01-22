@@ -10,7 +10,8 @@ import {
     EMPLOYEE,
     RESPONSE,
     TASK_RECORD,
-    UPDATE_TASK
+    UPDATE_TASK,
+    ADD_TASK
 } from '../actions/types';
 
 const initialState = {
@@ -40,6 +41,7 @@ export default function (state = initialState, action) {
             }
         case RESPONSE:
         case UPDATE_TASK:
+        case ADD_TASK:
             return {
                 ...state,
                 response: payload,

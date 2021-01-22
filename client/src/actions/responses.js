@@ -14,7 +14,8 @@ import {
     EMPLOYEE,
     RESPONSE,
     TASK_RECORD,
-    UPDATE_TASK
+    UPDATE_TASK,
+    ADD_TASK
 } from './types';
 
 export const getStaff = date => async dispatch => {
@@ -245,6 +246,36 @@ export const updateRecord = (id, formData) => async dispatch => {
 
 
     } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const addTask = (formData, history) => async dispatch => {
+    try {
+
+        const res = await axios.put('/api/responses', formData);
+
+        dispatch({
+            type: ADD_TASK,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Response Submitted', 'success'));
+
+        // history.push('/dashboard')
+        setTimeout(() => {
+            history.push('/dashboard')
+        }, 2000)
+
+
+    } catch (err) {
+        const errors = err.response.data.errors;
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error, 'danger')));
+        }
         dispatch({
             type: DATA_ERROR,
             payload: { msg: err.msg }

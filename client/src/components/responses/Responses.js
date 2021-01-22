@@ -29,8 +29,8 @@ const Responses = ({ employeeNames, resp: { employees, loading } }) => {
     const empOut = employees.length === 0 ? [] : employees.map((el, index) => {
         // let empName = `${el.warehouse_location} - ${el.employee_name}`;
         return (
-            <Fragment>
-                <Menu.Item key={index}
+            <Fragment key={index}>
+                <Menu.Item
                     name={el.employee_name}
                     active={item === el.employee_name}
                     onClick={() => setItem(el.employee_name)}

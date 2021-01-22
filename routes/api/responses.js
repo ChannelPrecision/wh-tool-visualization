@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../config/connectDb');
 const auth = require('../../middleware/auth');
+const { check, validationResult } = require('express-validator');
 
 router.post('/staff/:startDate/:endDate', async (req, res) => {
     const sql = `select distinct employee_name from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' order by employee_name asc`;
@@ -231,17 +232,91 @@ router.post('/update/:id', async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
-})
+});
 
-// router.post('/resp', [auth, [
-//     check('taskDate', 'Date is required').not().isEmpty()
-// ]], async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array() });
-//     }
+router.put('/', async (req, res) => {
+    let errs = [];
 
-//     console.log(JSON.stringify(req.body));
-// });
+    const { process_prime_qty, process_prime_time, process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time,
+        case_processed_qty, case_processed_time, case_labeled_qty, case_labeled_time,
+        items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
+        process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time,
+        process_onsite_qty, process_onsite_time, taskDate, employee_name, warehouse_location, submitted_date
+    } = req.body;
+
+    if (process_prime_qty > 0 && process_prime_time === '00:00') {
+        errs.push('Process Prime Time should not be equal to 00:00');
+    }
+    if (process_rapid_qty > 0 && process_rapid_time === '00:00') {
+        errs.push('Process Rapid Time should not be equal to 00:00');
+    }
+    if (add_inventory_qty > 0 && add_inventory_time === '00:00') {
+        errs.push('Add Inventory Time should not be equal to 00:00');
+    }
+    if (case_processed_qty > 0 && case_processed_time === '00:00') {
+        errs.push('Bulk Cases Processed Time should not be equal to 00:00');
+    }
+    if (case_labeled_qty > 0 && case_labeled_time === '00:00') {
+        errs.push('Bulk Cases Labeled Time should not be equal to 00:00');
+    }
+    if (items_labeled_qty > 0 && items_labeled_time === '00:00') {
+        errs.push('Items Labeled Time should not be equal to 00:00');
+    }
+    if (processed_removal_qty > 0 && processed_removal_time === '00:00') {
+        errs.push('Processed Removal Time should not be equal to 00:00');
+    }
+    if (process_returns_qty > 0 && process_returns_time === '00:00') {
+        errs.push('Process Returns Time should not be equal to 00:00');
+    }
+    if (audit_locations_qty > 0 && audit_locations_time === '00:00') {
+        errs.push('Audit Locations Time should not be equal to 00:00');
+    }
+    if (process_onsite_qty > 0 && process_onsite_time === '00:00') {
+        errs.push('Process Onsite Time should not be equal to 00:00');
+    }
+    if (taskDate === null || taskDate === '') {
+        errs.push('Please select a date');
+    }
+
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
+
+    if (errs.length > 0) {
+        return res.status(400).json({ errors: errs });
+    }
+
+    // console.log(JSON.stringify(req.body));
+    try {
+        const sql = `INSERT INTO efficiency_report.responses (
+            employee_name, warehouse_location, submitted_date, task_date, process_prime_qty, process_prime_time,
+            process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time, bulk_cases_processed_qty,
+            bulk_cases_processed_time, bulk_cases_labeled_qty, bulk_cases_labeled_time, items_labeled_qty,
+            items_labeled_time, processed_removal_qty, processed_removal_time, process_returns_qty, process_returns_time,
+            audit_locations_qty, audit_locations_time, process_onsite_qty, process_onsite_time)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+
+        const data = [employee_name, warehouse_location, submitted_date, taskDate, process_prime_qty,
+            process_prime_time, process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time,
+            case_processed_qty, case_processed_time, case_labeled_qty, case_labeled_time,
+            items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
+            process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time,
+            process_onsite_qty, process_onsite_time];
+
+        db.query(sql, data, (err, results) => {
+            if (err) return res.status(500).json(err);
+        })
+
+        res.status(200).json();
+
+        // console.log(JSON.stringify(req.body))
+        // console.log(data);
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 module.exports = router;
