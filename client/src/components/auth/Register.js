@@ -36,10 +36,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
     return (
         <Fragment>
-            <div className="ui segment" style={
+            <div className="ui segment" id="regForm" style={
                 {
-                    height: '75vh', textAlign: 'center', width: '600px', float: 'middle', justifyContent: 'center',
-                    display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px'
+                    textAlign: 'center', width: '600px', float: 'middle', justifyContent: 'center',
+                    display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px', paddingBottom: '50px'
                 }
             }>
                 <h1 className="large text-primary">Sign Up</h1>
