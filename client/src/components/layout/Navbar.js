@@ -9,6 +9,8 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         <ul>
             <li><Link to="/dashboard"><i className="chart pie icon"></i>{' '}
                 <span className="hide-sm">Dashboard</span></Link></li>
+            <li><Link to="/form"><i className="wpforms icon"></i>{' '}
+                <span className="hide-sm">Form</span></Link></li>
             <li><Link to="/responses"><i className="database icon"></i>{' '}
                 <span className="hide-sm">Responses</span></Link></li>
             <li><Link to="#" onClick={logout}><i className="fas fa-sign-out-alt"></i>{' '}
