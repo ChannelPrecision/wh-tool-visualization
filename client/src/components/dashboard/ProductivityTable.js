@@ -17,7 +17,7 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
     useEffect(() => {
         getStaff(dates);
         getProductivity(dates, emp);
-    }, [dates, emp, getStaff, getProductivity]);
+    }, [dates, emp, getStaff, getProductivity, staff, productivities]);
 
     const onChange = e => {
         setEmp(e.target.value)
