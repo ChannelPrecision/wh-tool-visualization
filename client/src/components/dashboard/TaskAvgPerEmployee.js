@@ -1,20 +1,20 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { employeeAverage } from '../../actions/responses';
+import { employeeAveragePerEmployee } from '../../actions/responses';
 
 import CanvasJSReact from '../../canvasjs.react';
 // const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const TaskAveragePerEmployee = ({ dates, employeeAverage, resp: { avgs, loading } }) => {
+const TaskAveragePerEmployee = ({ dates, employeeAveragePerEmployee, resp: { taskAvgPerEmp, loading } }) => {
     const [task, setTask] = useState('processPrimeAvg');
 
     useEffect(() => {
-        employeeAverage(dates, 'all');
-    }, [dates, employeeAverage]);
+        employeeAveragePerEmployee(dates);
+    }, [dates, task]);
 
-    const dataValue = avgs.length > 0 ? avgs.map((res) => ({
+    const dataValue = taskAvgPerEmp.length > 0 ? taskAvgPerEmp.map((res) => ({
         'label': res.employee_name,
         'y': res[task]
     })) : [];
@@ -71,7 +71,7 @@ const TaskAveragePerEmployee = ({ dates, employeeAverage, resp: { avgs, loading 
 };
 
 TaskAveragePerEmployee.propTypes = {
-    employeeAverage: PropTypes.func.isRequired,
+    employeeAveragePerEmployee: PropTypes.func.isRequired,
     resp: PropTypes.object.isRequired
 }
 
@@ -79,4 +79,4 @@ const mapStateToProps = state => ({
     resp: state.responses
 });
 
-export default connect(mapStateToProps, { employeeAverage })(TaskAveragePerEmployee);
+export default connect(mapStateToProps, { employeeAveragePerEmployee })(TaskAveragePerEmployee);

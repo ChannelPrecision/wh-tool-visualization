@@ -11,7 +11,8 @@ import {
     RESPONSE,
     TASK_RECORD,
     UPDATE_TASK,
-    ADD_TASK
+    ADD_TASK,
+    EMP_AVG_PER_EMPLOYEE
 } from '../actions/types';
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
     employees: [],
     emp: [],
     response: [],
+    taskAvgPerEmp: [],
     loading: true,
     error: {}
 };
@@ -57,6 +59,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 avgs: payload,
+                loading: false
+            }
+        case EMP_AVG_PER_EMPLOYEE:
+            return {
+                ...state,
+                taskAvgPerEmp: payload,
                 loading: false
             }
         case GET_PRODUCTIVITY:

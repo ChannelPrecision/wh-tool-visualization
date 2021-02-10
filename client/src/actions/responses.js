@@ -15,7 +15,8 @@ import {
     RESPONSE,
     TASK_RECORD,
     UPDATE_TASK,
-    ADD_TASK
+    ADD_TASK,
+    EMP_AVG_PER_EMPLOYEE
 } from './types';
 
 export const getStaff = date => async dispatch => {
@@ -64,6 +65,24 @@ export const employeeAverage = (date, warehouse) => async dispatch => {
 
         dispatch({
             type: EMPLOYEE_AVERAGE,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const employeeAveragePerEmployee = (date) => async dispatch => {
+    try {
+        const startDate = format(date[0], "yyyy-MM-dd");
+        const endDate = format(date[1], "yyyy-MM-dd");
+        const res = await axios.post(`/api/responses/avg_per_employee/${startDate}/${endDate}`);
+
+        dispatch({
+            type: EMP_AVG_PER_EMPLOYEE,
             payload: res.data
         });
     } catch (err) {
