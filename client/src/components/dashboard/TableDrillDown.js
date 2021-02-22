@@ -36,7 +36,7 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
                     "Header": "",
                     "accessor": "taskDate",
                     "width": 50,
-                    "Cell": props => <Link to={{ pathname: `view/date/${props.value}/${emp}`, params: props }}><i className='ui caret right icon black'></i></Link>
+                    "Cell": props => <Link to={{ pathname: `view/date/${props.value}/${emp}`, params: props }}><i className='ui external alternate icon black'></i></Link>
                 },
                 {
                     "Header": "Date",
