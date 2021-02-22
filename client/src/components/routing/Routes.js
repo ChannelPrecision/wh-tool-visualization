@@ -11,6 +11,7 @@ import Form from '../form/Form';
 import Responses from '../responses/Responses';
 import DeleteResponse from '../responses/DeleteResponse';
 import EditResponse from '../responses/Edit2';
+import ViewProductivityByDate from '../dashboard/ViewProductivityByDate';
 
 const Routes = () => {
     return (
@@ -25,6 +26,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/responses" component={Responses} />
                 <PrivateRoute exact path="/response/delete/:id" component={DeleteResponse} />
                 <PrivateRoute exact path="/response/edit/:id" component={EditResponse} />
+                <PrivateRoute exact path="/view/date/:ddDate/:emp" component={ViewProductivityByDate} />
                 <Route component={NotFound} />
             </Switch>
         </section>

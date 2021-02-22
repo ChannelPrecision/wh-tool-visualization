@@ -16,7 +16,9 @@ import {
     TASK_RECORD,
     UPDATE_TASK,
     ADD_TASK,
-    EMP_AVG_PER_EMPLOYEE
+    EMP_AVG_PER_EMPLOYEE,
+    PROD_BY_DATE,
+    PROD_ONE_DATE
 } from './types';
 
 export const getStaff = date => async dispatch => {
@@ -111,6 +113,43 @@ export const getProductivity = (date, emp) => async dispatch => {
         })
     }
 }
+
+export const getProductivity2 = (date, emp) => async dispatch => {
+    try {
+        const startDate = format(date[0], "yyyy-MM-dd");
+        const endDate = format(date[1], "yyyy-MM-dd");
+        const res = await axios.post(`/api/responses/productivity2/${startDate}/${endDate}/${emp}`);
+
+        dispatch({
+            type: PROD_BY_DATE,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+}
+
+export const getProductivity3 = (date, emp) => async dispatch => {
+    try {
+        // const startDate = format(date, "yyyy-MM-dd");
+        const res = await axios.post(`/api/responses/productivity3/${date}/${emp}`);
+
+        dispatch({
+            type: PROD_ONE_DATE,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: DATA_ERROR,
+            payload: { msg: err.msg }
+        })
+    }
+};
 
 export const taskRecords = (date) => async dispatch => {
     try {

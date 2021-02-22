@@ -1,8 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getStaff, getProductivity } from '../../actions/responses';
-import _ from 'lodash';
+import { Link } from 'react-router-dom';
+
+import { getStaff, getProductivity2 } from '../../actions/responses';
 
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
@@ -11,12 +12,12 @@ import 'react-table-hoc-fixed-columns/lib/styles.css';
 
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
 
-const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, productivities, loading } }) => {
+const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, prodByDate, loading } }) => {
     const [emp, setEmp] = useState('all');
 
     useEffect(() => {
         getStaff(dates);
-        getProductivity(dates, emp);
+        getProductivity2(dates, emp);
     }, [dates, emp, loading]);
 
     const onChange = e => {
@@ -28,18 +29,19 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
 
     const columns = [
         {
-            "Header": "Staff & Date",
+            "Header": "",
             "fixed": "left",
             "columns": [
+                {
+                    "Header": "",
+                    "accessor": "taskDate",
+                    "width": 50,
+                    "Cell": props => <Link to={{ pathname: `view/date/${props.value}/${emp}`, params: props }}><i className='ui caret right icon black'></i></Link>
+                },
                 {
                     "Header": "Date",
                     "accessor": "taskDate",
                     "width": 140
-                },
-                {
-                    "Header": "Staff",
-                    "accessor": "employee_name",
-                    "width": 160
                 }
             ]
         },
@@ -50,21 +52,22 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "process_prime_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "process_prime_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
                     "accessor": "processPrimeAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
+                    // "aggregate": value => _.round(_.mean(value), 2),
                     // "Aggregated": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>,
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -75,20 +78,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "process_rapid_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "process_rapid_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
                     "accessor": "processRapidAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -99,20 +103,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "add_inventory_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "add_inventory_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "addInvAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    "accessor": "addInventoryAvg",
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -123,20 +128,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "bulk_cases_processed_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "bulk_cases_processed_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "bulkCasesProcAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    "accessor": "bulkCasesAvg",
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -147,20 +153,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "bulk_cases_labeled_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "bulk_cases_labeled_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
                     "accessor": "bulkCasesLabeledAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -171,20 +178,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "items_labeled_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "items_labeled_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
                     "accessor": "itemsLabeledAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -195,20 +203,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "processed_removal_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "processed_removal_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "procRemovalAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    "accessor": "processRemovalAvg",
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -219,20 +228,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "audit_locations_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "audit_locations_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "auditLocationAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    "accessor": "auditLocationsAvg",
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -243,20 +253,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "process_returns_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "process_returns_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "procReturnsAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    "accessor": "processReturnsAvg",
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         },
@@ -267,20 +278,21 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     "Header": "Qty",
                     "accessor": "process_onsite_qty",
                     "width": 60,
-                    "aggregate": value => _.sum(value)
+                    // "aggregate": value => _.sum(value)
                 },
                 {
                     "Header": "Time",
                     "accessor": "process_onsite_time",
                     "width": 60,
-                    "aggregate": value => _.round(_.sum(value), 2)
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
                 },
                 {
                     "Header": "AVG",
                     "width": 60,
                     "accessor": "processOnsiteAvg",
-                    "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
         }
@@ -296,8 +308,8 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
                     {options}
                 </select>
                 <ReactTableFixedColumns
-                    pivotBy={["taskDate", "employee_name"]}
-                    data={productivities}
+                    // pivotBy={["taskDate", "employee_name"]}
+                    data={prodByDate}
                     columns={columns}
                     defaultPageSize={10}
                     pageSizeOptions={[10, 25, 50, 100, 150]}
@@ -310,13 +322,13 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity, resp: { staff, prod
 
 EmployeeRecords.propTypes = {
     getStaff: PropTypes.func.isRequired,
-    getProductivity: PropTypes.func.isRequired,
+    getProductivity2: PropTypes.func.isRequired,
     staff: PropTypes.object.isRequired,
-    productivities: PropTypes.object.isRequired
+    prodByDate: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     resp: state.responses
 });
 
-export default connect(mapStateToProps, { getStaff, getProductivity })(EmployeeRecords);
+export default connect(mapStateToProps, { getStaff, getProductivity2 })(EmployeeRecords);

@@ -577,6 +577,10 @@ button {
   .ReactTable {
     text-align: center;
   }
+
+  .ui.active.modal {
+    width: 500px;
+  }
 }
 
 .ReactTable {
@@ -685,4 +689,22 @@ button {
     transition: .3s;
     outline: none;
     padding: 0 0 5px;
+}
+
+.ui.active.modal {
+  width: 1200px;
+}
+
+#modal .close {
+  cursor: pointer;
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  z-index: 1;
+  opacity: .8;
+  font-size: 1.25em;
+  color: #fff;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: .625rem 0 0 0;
 }

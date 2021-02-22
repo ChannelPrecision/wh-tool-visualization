@@ -21,3 +21,5 @@ export const TASK_RECORD = 'TASK_RECORD';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const ADD_TASK = 'ADD_TASK';
 export const EMP_AVG_PER_EMPLOYEE = 'EMP_AVG_PER_EMPLOYEE';
+export const PROD_BY_DATE = 'PROD_BY_DATE';
+export const PROD_ONE_DATE = 'PROD_ONE_DATE';

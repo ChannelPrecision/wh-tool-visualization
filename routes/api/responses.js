@@ -44,6 +44,83 @@ router.post('/productivity/:startDate/:endDate/:emp', async (req, res) => {
         db.query(sql, (err, results) => {
             if (err) return res.status(500).json(err);
             res.status(200).json(results);
+            // console.log(JSON.stringify(results))
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// productivity group by date
+router.post('/productivity2/:startDate/:endDate/:emp', async (req, res) => {
+    const allEmp = `select DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate, 
+    sum(process_prime_qty) as process_prime_qty, sum(time_to_sec(process_prime_time) / (60 * 60)) as process_prime_time, sum(process_prime_qty) / (sum(time_to_sec(process_prime_time) / (60 * 60))) as processPrimeAvg,
+    sum(process_rapid_qty) as process_rapid_qty, sum(time_to_sec(process_rapid_time) / (60 * 60)) as process_rapid_time, sum(process_rapid_qty) / (sum(time_to_sec(process_rapid_time) / (60 * 60))) as processRapidAvg,
+    sum(add_inventory_qty) as add_inventory_qty, sum(time_to_sec(add_inventory_time) / (60 * 60)) as add_inventory_time, sum(add_inventory_qty) / (sum(time_to_sec(add_inventory_time) / (60 * 60))) as addInventoryAvg,
+    sum(bulk_cases_processed_qty) as bulk_cases_processed_qty, sum(time_to_sec(bulk_cases_processed_time) / (60 * 60)) as bulk_cases_processed_time, sum(bulk_cases_processed_qty) / (sum(time_to_sec(bulk_cases_processed_time) / (60 * 60))) as bulkCasesAvg,
+    sum(bulk_cases_labeled_qty) as bulk_cases_labeled_qty, sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60)) as bulk_cases_labeled_time, sum(bulk_cases_labeled_qty) / (sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60))) as bulkCasesLabeledAvg,
+    sum(items_labeled_qty) as items_labeled_qty, sum(time_to_sec(items_labeled_time) / (60 * 60)) as items_labeled_time, sum(items_labeled_qty) / (sum(time_to_sec(items_labeled_time) / (60 * 60))) as itemsLabeledAvg,
+    sum(processed_removal_qty) as processed_removal_qty, sum(time_to_sec(processed_removal_time) / (60 * 60)) as processed_removal_time, sum(processed_removal_qty) / (sum(time_to_sec(processed_removal_time) / (60 * 60))) as processRemovalAvg,
+    sum(process_returns_qty) as process_returns_qty, sum(time_to_sec(process_returns_time) / (60 * 60)) as process_returns_time, sum(process_returns_qty) / (sum(time_to_sec(process_returns_time) / (60 * 60))) as processReturnsAvg,
+    sum(audit_locations_qty) as audit_locations_qty, sum(time_to_sec(audit_locations_time) / (60 * 60)) as audit_locations_time, sum(audit_locations_qty) / (sum(time_to_sec(audit_locations_time) / (60 * 60))) as auditLocationsAvg,
+    sum(process_onsite_qty) as process_onsite_qty, sum(time_to_sec(process_onsite_time) / (60 * 60)) as process_onsite_time, sum(process_onsite_qty) / (sum(time_to_sec(process_onsite_time) / (60 * 60))) as processOnsiteAvg
+    from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' group by taskDate order by DATE_FORMAT(task_date, "%Y%m%d") desc`;
+
+    const oneEmp = `select DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate, 
+    sum(process_prime_qty) as process_prime_qty, sum(time_to_sec(process_prime_time) / (60 * 60)) as process_prime_time, sum(process_prime_qty) / (sum(time_to_sec(process_prime_time) / (60 * 60))) as processPrimeAvg,
+    sum(process_rapid_qty) as process_rapid_qty, sum(time_to_sec(process_rapid_time) / (60 * 60)) as process_rapid_time, sum(process_rapid_qty) / (sum(time_to_sec(process_rapid_time) / (60 * 60))) as processRapidAvg,
+    sum(add_inventory_qty) as add_inventory_qty, sum(time_to_sec(add_inventory_time) / (60 * 60)) as add_inventory_time, sum(add_inventory_qty) / (sum(time_to_sec(add_inventory_time) / (60 * 60))) as addInventoryAvg,
+    sum(bulk_cases_processed_qty) as bulk_cases_processed_qty, sum(time_to_sec(bulk_cases_processed_time) / (60 * 60)) as bulk_cases_processed_time, sum(bulk_cases_processed_qty) / (sum(time_to_sec(bulk_cases_processed_time) / (60 * 60))) as bulkCasesAvg,
+    sum(bulk_cases_labeled_qty) as bulk_cases_labeled_qty, sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60)) as bulk_cases_labeled_time, sum(bulk_cases_labeled_qty) / (sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60))) as bulkCasesLabeledAvg,
+    sum(items_labeled_qty) as items_labeled_qty, sum(time_to_sec(items_labeled_time) / (60 * 60)) as items_labeled_time, sum(items_labeled_qty) / (sum(time_to_sec(items_labeled_time) / (60 * 60))) as itemsLabeledAvg,
+    sum(processed_removal_qty) as processed_removal_qty, sum(time_to_sec(processed_removal_time) / (60 * 60)) as processed_removal_time, sum(processed_removal_qty) / (sum(time_to_sec(processed_removal_time) / (60 * 60))) as processRemovalAvg,
+    sum(process_returns_qty) as process_returns_qty, sum(time_to_sec(process_returns_time) / (60 * 60)) as process_returns_time, sum(process_returns_qty) / (sum(time_to_sec(process_returns_time) / (60 * 60))) as processReturnsAvg,
+    sum(audit_locations_qty) as audit_locations_qty, sum(time_to_sec(audit_locations_time) / (60 * 60)) as audit_locations_time, sum(audit_locations_qty) / (sum(time_to_sec(audit_locations_time) / (60 * 60))) as auditLocationsAvg,
+    sum(process_onsite_qty) as process_onsite_qty, sum(time_to_sec(process_onsite_time) / (60 * 60)) as process_onsite_time, sum(process_onsite_qty) / (sum(time_to_sec(process_onsite_time) / (60 * 60))) as processOnsiteAvg
+    from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' and employee_name = '${req.params.emp}' group by taskDate order by DATE_FORMAT(task_date, "%Y%m%d") desc`;
+
+    const sql = req.params.emp === 'all' ? allEmp : oneEmp;
+
+    try {
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json(err);
+            res.status(200).json(results);
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+//productivity for one date
+router.post('/productivity3/:drillDownDate/:emp', async (req, res) => {
+    const allEmp = `select employee_name, process_prime_qty, time_to_sec(process_prime_time) / (60 * 60) as process_prime_time, process_rapid_qty, time_to_sec(process_rapid_time) / (60 * 60) as process_rapid_time,
+    add_inventory_qty, time_to_sec(add_inventory_time) / (60 * 60) as add_inventory_time, bulk_cases_processed_qty, time_to_sec(bulk_cases_processed_time) / (60 * 60) as bulk_cases_processed_time, bulk_cases_labeled_qty, time_to_sec(bulk_cases_labeled_time) / (60 * 60) as bulk_cases_labeled_time,
+    items_labeled_qty, time_to_sec(items_labeled_time) / (60 * 60) as items_labeled_time, processed_removal_qty, time_to_sec(processed_removal_time) / (60 * 60) as processed_removal_time, process_returns_qty, time_to_sec(process_returns_time) / (60 * 60) as process_returns_time, audit_locations_qty,
+    time_to_sec(audit_locations_time) / (60 * 60) as audit_locations_time, process_onsite_qty, time_to_sec(process_onsite_time) / (60 * 60) as process_onsite_time, 
+    process_prime_qty/(time_to_sec(process_prime_time) / (60 * 60)) as processPrimeAvg, process_rapid_qty/(time_to_sec(process_rapid_time) / (60 * 60)) as processRapidAvg, add_inventory_qty/(time_to_sec(add_inventory_time) / (60 * 60)) as addInvAvg,
+    bulk_cases_processed_qty/(time_to_sec(bulk_cases_processed_time) / (60 * 60)) as bulkCasesProcAvg, bulk_cases_labeled_qty/(time_to_sec(bulk_cases_labeled_time) / (60 * 60)) as bulkCasesLabeledAvg, items_labeled_qty/(time_to_sec(items_labeled_time) / (60 * 60)) as itemsLabeledAvg,
+    processed_removal_qty/(time_to_sec(processed_removal_time) / (60 * 60)) as procRemovalAvg, process_returns_qty/(time_to_sec(process_returns_time) / (60 * 60)) as procReturnsAvg, audit_locations_qty/(time_to_sec(audit_locations_time) / (60 * 60)) as auditLocationAvg,
+    process_onsite_qty/(time_to_sec(process_onsite_time) / (60 * 60)) as processOnsiteAvg
+    from efficiency_report.responses where task_date = '${req.params.drillDownDate}'`;
+
+    const oneEmp = `select employee_name, process_prime_qty, time_to_sec(process_prime_time) / (60 * 60) as process_prime_time, process_rapid_qty, time_to_sec(process_rapid_time) / (60 * 60) as process_rapid_time,
+    add_inventory_qty, time_to_sec(add_inventory_time) / (60 * 60) as add_inventory_time, bulk_cases_processed_qty, time_to_sec(bulk_cases_processed_time) / (60 * 60) as bulk_cases_processed_time, bulk_cases_labeled_qty, time_to_sec(bulk_cases_labeled_time) / (60 * 60) as bulk_cases_labeled_time,
+    items_labeled_qty, time_to_sec(items_labeled_time) / (60 * 60) as items_labeled_time, processed_removal_qty, time_to_sec(processed_removal_time) / (60 * 60) as processed_removal_time, process_returns_qty, time_to_sec(process_returns_time) / (60 * 60) as process_returns_time, audit_locations_qty,
+    time_to_sec(audit_locations_time) / (60 * 60) as audit_locations_time, process_onsite_qty, time_to_sec(process_onsite_time) / (60 * 60) as process_onsite_time, 
+    process_prime_qty/(time_to_sec(process_prime_time) / (60 * 60)) as processPrimeAvg, process_rapid_qty/(time_to_sec(process_rapid_time) / (60 * 60)) as processRapidAvg, add_inventory_qty/(time_to_sec(add_inventory_time) / (60 * 60)) as addInvAvg,
+    bulk_cases_processed_qty/(time_to_sec(bulk_cases_processed_time) / (60 * 60)) as bulkCasesProcAvg, bulk_cases_labeled_qty/(time_to_sec(bulk_cases_labeled_time) / (60 * 60)) as bulkCasesLabeledAvg, items_labeled_qty/(time_to_sec(items_labeled_time) / (60 * 60)) as itemsLabeledAvg,
+    processed_removal_qty/(time_to_sec(processed_removal_time) / (60 * 60)) as procRemovalAvg, process_returns_qty/(time_to_sec(process_returns_time) / (60 * 60)) as procReturnsAvg, audit_locations_qty/(time_to_sec(audit_locations_time) / (60 * 60)) as auditLocationAvg,
+    process_onsite_qty/(time_to_sec(process_onsite_time) / (60 * 60)) as processOnsiteAvg
+    from efficiency_report.responses where task_date = '${req.params.drillDownDate}' and employee_name = '${req.params.emp}'`;
+
+    const sql = req.params.emp === 'all' ? allEmp : oneEmp;
+
+    try {
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json(err);
+            res.status(200).json(results);
         })
     } catch (err) {
         console.error(err.message);

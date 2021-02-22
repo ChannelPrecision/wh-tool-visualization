@@ -7,6 +7,7 @@ import TaskRecord from './TaskRecord';
 import EmployeeRecords from './EmployeeRecords';
 import EmployeeAverage from './EmployeeAverage';
 import TaskAveragePerEmployee from './TaskAvgPerEmployee';
+import DrillDown from './TableDrillDown';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -25,7 +26,8 @@ const Dashboard = () => {
                     />
                 </div>
             </div>
-            <ProductivityTable dates={date} />
+            <DrillDown dates={date} />
+            {/* <ProductivityTable dates={date} /> */}
             <TaskRecord dates={date} />
             <EmployeeRecords dates={date} />
             <EmployeeAverage dates={date} />
