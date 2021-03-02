@@ -41,10 +41,14 @@ router.post('/', [
 
             password = await bcrypt.hash(password, salt);
 
-            const insertQry = `insert into users (firstname, lastname, gender, email, password, warehouse_location) 
-            values ('${firstname}','${lastname}','${gender}','${email}','${password}','${warehouse_location}')`;
+            // const insertQry = `insert into users (firstname, lastname, gender, email, password, warehouse_location) 
+            // values ('${firstname}','${lastname.replace("'", "\'")}','${gender}','${email}','${password}','${warehouse_location}')`;
 
-            db.query(insertQry, async (err, result) => {
+            const insertQry = `INSERT INTO efficiency_report.users (firstname, lastname, gender, email, password, warehouse_location) VALUES (?, ?, ?, ?, ?, ?)`;
+
+            const insertData = [firstname, lastname, gender, email, password, warehouse_location];
+
+            db.query(insertQry, insertData, (err, result) => {
                 console.log('inserted new user');
             })
             const token = jwt.sign({
