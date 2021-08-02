@@ -39,9 +39,5 @@
     {
         "Header": "Process Returns",
         "accessor": "process_returns_qty"
-    },
-    {
-        "Header": "Process OnSite",
-        "accessor": "process_onsite_qty"
     }
 ]

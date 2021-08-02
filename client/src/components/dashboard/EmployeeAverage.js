@@ -66,11 +66,6 @@ const EmployeeAverage = ({ dates, employeeAverage, resp: { avgs, loading } }) =>
             Header: "Process Returns",
             accessor: "processReturnsAvg",
             Cell: props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
-        },
-        {
-            Header: "Process OnSite",
-            accessor: "processOnsiteAvg",
-            Cell: props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
         }
     ];
 

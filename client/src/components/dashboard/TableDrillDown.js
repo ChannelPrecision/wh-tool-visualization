@@ -270,31 +270,6 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
                     "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
-        },
-        {
-            "Header": "Process OnSite",
-            "columns": [
-                {
-                    "Header": "Qty",
-                    "accessor": "process_onsite_qty",
-                    "width": 60,
-                    // "aggregate": value => _.sum(value)
-                },
-                {
-                    "Header": "Time",
-                    "accessor": "process_onsite_time",
-                    "width": 60,
-                    // "aggregate": value => _.round(_.sum(value), 2)
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
-                },
-                {
-                    "Header": "AVG",
-                    "width": 60,
-                    "accessor": "processOnsiteAvg",
-                    // "aggregate": value => _.round(_.mean(value), 2),
-                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
-                }
-            ]
         }
     ];
 

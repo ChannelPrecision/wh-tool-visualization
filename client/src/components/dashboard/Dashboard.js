@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 // import { format } from 'date-fns';
 
-import ProductivityTable from './ProductivityTable';
+// import ProductivityTable from './ProductivityTable';
 import TaskRecord from './TaskRecord';
 import EmployeeRecords from './EmployeeRecords';
 import EmployeeAverage from './EmployeeAverage';
