@@ -179,20 +179,6 @@ const EmployeeResponses = ({ name, employee, resp: { emp, loading } }) => {
                     "accessor": "process_returns_time"
                 }
             ]
-        },
-        {
-            "Header": "Process OnSite",
-            "columns": [
-                {
-                    "Header": "Qty",
-                    "accessor": "process_onsite_qty",
-                    "width": 55
-                },
-                {
-                    "Header": "Time",
-                    "accessor": "process_onsite_time"
-                }
-            ]
         }
     ]
 

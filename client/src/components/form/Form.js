@@ -32,8 +32,6 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
         processed_removal_time: '00:00',
         process_returns_qty: 0,
         process_returns_time: '00:00',
-        process_onsite_qty: 0,
-        process_onsite_time: '00:00',
         audit_locations_qty: 0,
         audit_locations_time: '00:00',
         employee_name: null,
@@ -82,8 +80,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(0)}
                         >
                             <Icon name='dropdown' />
-          Process Prime
-        </Accordion.Title>
+                            Process Prime
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 0}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -107,8 +105,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(1)}
                         >
                             <Icon name='dropdown' />
-          Process Rapid
-        </Accordion.Title>
+                            Process Rapid
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 1}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -132,8 +130,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(2)}
                         >
                             <Icon name='dropdown' />
-          Add Inventory
-        </Accordion.Title>
+                            Add Inventory
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 2}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -156,8 +154,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(3)}
                         >
                             <Icon name='dropdown' />
-          Bulk Cases Processed
-        </Accordion.Title>
+                            Bulk Cases Processed
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 3}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -180,8 +178,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(4)}
                         >
                             <Icon name='dropdown' />
-          Bulk Cases Labeled
-        </Accordion.Title>
+                            Bulk Cases Labeled
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 4}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -204,8 +202,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(5)}
                         >
                             <Icon name='dropdown' />
-          Items Labeled
-        </Accordion.Title>
+                            Items Labeled
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 5}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -228,8 +226,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(6)}
                         >
                             <Icon name='dropdown' />
-          Processed Removal
-        </Accordion.Title>
+                            Processed Removal
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 6}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -252,8 +250,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(7)}
                         >
                             <Icon name='dropdown' />
-          Process Returns
-        </Accordion.Title>
+                            Process Returns
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 7}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -276,8 +274,8 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                             onClick={() => handleClick(8)}
                         >
                             <Icon name='dropdown' />
-          Audit Locations
-        </Accordion.Title>
+                            Audit Locations
+                        </Accordion.Title>
                         <Accordion.Content active={activeIndex === 8}>
                             <div className="ui grid" id="gridContent">
                                 <div className="four wide column">
@@ -290,30 +288,6 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
                                         <TimeField style={{ width: '120px' }} name="audit_locations_time" value={formData.audit_locations_time} onChange={e => onChange(e)} />
-                                    </div>
-                                </div>
-                            </div>
-                        </Accordion.Content>
-                        <Accordion.Title
-                            active={activeIndex === 9}
-                            index={9}
-                            onClick={() => handleClick(9)}
-                        >
-                            <Icon name='dropdown' />
-          Process Onsite
-        </Accordion.Title>
-                        <Accordion.Content active={activeIndex === 9}>
-                            <div className="ui grid" id="gridContent">
-                                <div className="four wide column">
-                                    <p>Quantity</p>
-                                    <div className="qtyInput">
-                                        <input type="text" placeholder="0" name="process_onsite_qty" onChange={e => onChange(e)} />
-                                    </div>
-                                </div>
-                                <div className="four wide column">
-                                    <p>Duration (hh:mm)</p>
-                                    <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="process_onsite_time" value={formData.process_onsite_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
