@@ -39,5 +39,13 @@
     {
         "Header": "Process Returns",
         "accessor": "process_returns_qty"
+    },
+    {
+        "Header": "Prime Picking",
+        "accessor": "prime_picking_qty"
+    },
+    {
+        "Header": "Poly Bag & Packing",
+        "accessor": "poly_bag_qty"
     }
 ]

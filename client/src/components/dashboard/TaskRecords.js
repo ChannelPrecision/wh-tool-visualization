@@ -50,6 +50,8 @@ const TaskRecords = ({ dates, taskRecords, resp: { tasks, loading } }) => {
                     <option value="processRemoval">Process Removal</option>
                     <option value="processReturns">Process Returns</option>
                     <option value="auditLocations">Audit Locations</option>
+                    <option value="primePicking">Prime Picking</option>
+                    <option value="polyBag">Poly Bag & Packing</option>
                 </select>
             </div>
             {/* <PieChart

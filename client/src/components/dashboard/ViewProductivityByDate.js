@@ -255,6 +255,56 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp } }, g
                     "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
             ]
+        },
+        {
+            "Header": "Prime Picking",
+            "columns": [
+                {
+                    "Header": "Qty",
+                    "accessor": "prime_picking_qty",
+                    "width": 60,
+                    // "aggregate": value => _.sum(value)
+                },
+                {
+                    "Header": "Time",
+                    "accessor": "prime_picking_time",
+                    "width": 60,
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                },
+                {
+                    "Header": "AVG",
+                    "width": 60,
+                    "accessor": "primePickingAvg",
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
+                }
+            ]
+        },
+        {
+            "Header": "Poly Bag & Packing",
+            "columns": [
+                {
+                    "Header": "Qty",
+                    "accessor": "poly_bag_qty",
+                    "width": 60,
+                    // "aggregate": value => _.sum(value)
+                },
+                {
+                    "Header": "Time",
+                    "accessor": "poly_bag_time",
+                    "width": 60,
+                    // "aggregate": value => _.round(_.sum(value), 2)
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : ''}</span>
+                },
+                {
+                    "Header": "AVG",
+                    "width": 60,
+                    "accessor": "polyBagAvg",
+                    // "aggregate": value => _.round(_.mean(value), 2),
+                    "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
+                }
+            ]
         }
     ];
 

@@ -59,12 +59,15 @@ const TaskAveragePerEmployee = ({ dates, employeeAveragePerEmployee, resp: { tas
                         <option value="processRemovalAvg">Process Removal</option>
                         <option value="processReturnsAvg">Process Returns</option>
                         <option value="auditLocationsAvg">Audit Locations</option>
+                        <option value="primePickingAvg">Prime Picking</option>
+                        <option value="polyBagAvg">Poly Bag & Packing</option>
                     </select>
                 </div>
                 <CanvasJSChart options={options}
                 /* onRef = {ref => this.chart = ref} */
                 />
             </div>
+            <br></br>
         </Fragment>
     )
 };
