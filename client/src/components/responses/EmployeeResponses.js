@@ -179,6 +179,34 @@ const EmployeeResponses = ({ name, employee, resp: { emp, loading } }) => {
                     "accessor": "process_returns_time"
                 }
             ]
+        },
+        {
+            "Header": "Prime Picking",
+            "columns": [
+                {
+                    "Header": "Qty",
+                    "accessor": "prime_picking_qty",
+                    "width": 55
+                },
+                {
+                    "Header": "Time",
+                    "accessor": "prime_picking_time"
+                }
+            ]
+        },
+        {
+            "Header": "Poly Bag & Packing",
+            "columns": [
+                {
+                    "Header": "Qty",
+                    "accessor": "poly_bag_qty",
+                    "width": 55
+                },
+                {
+                    "Header": "Time",
+                    "accessor": "poly_bag_time"
+                }
+            ]
         }
     ]
 

@@ -34,6 +34,10 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
         process_returns_time: '00:00',
         audit_locations_qty: 0,
         audit_locations_time: '00:00',
+        prime_picking_qty: 0,
+        prime_picking_time: '00:00',
+        poly_bag_qty: 0,
+        poly_bag_time: '00:00',
         employee_name: null,
         warehouse_location: null,
         submitted_date: moment().format("YYYY-MM-DD")
@@ -288,6 +292,54 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
                                         <TimeField style={{ width: '120px' }} name="audit_locations_time" value={formData.audit_locations_time} onChange={e => onChange(e)} />
+                                    </div>
+                                </div>
+                            </div>
+                        </Accordion.Content>
+                        <Accordion.Title
+                            active={activeIndex === 9}
+                            index={9}
+                            onClick={() => handleClick(9)}
+                        >
+                            <Icon name='dropdown' />
+                            Prime Picking
+                        </Accordion.Title>
+                        <Accordion.Content active={activeIndex === 9}>
+                            <div className="ui grid" id="gridContent">
+                                <div className="four wide column">
+                                    <p>Quantity</p>
+                                    <div className="qtyInput">
+                                        <input type="text" placeholder="0" name="prime_picking_qty" onChange={e => onChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="four wide column">
+                                    <p>Duration (hh:mm)</p>
+                                    <div className="qtyInput">
+                                        <TimeField style={{ width: '120px' }} name="prime_picking_time" value={formData.prime_picking_time} onChange={e => onChange(e)} />
+                                    </div>
+                                </div>
+                            </div>
+                        </Accordion.Content>
+                        <Accordion.Title
+                            active={activeIndex === 10}
+                            index={10}
+                            onClick={() => handleClick(10)}
+                        >
+                            <Icon name='dropdown' />
+                            Poly Bag & Packing
+                        </Accordion.Title>
+                        <Accordion.Content active={activeIndex === 10}>
+                            <div className="ui grid" id="gridContent">
+                                <div className="four wide column">
+                                    <p>Quantity</p>
+                                    <div className="qtyInput">
+                                        <input type="text" placeholder="0" name="poly_bag_qty" onChange={e => onChange(e)} />
+                                    </div>
+                                </div>
+                                <div className="four wide column">
+                                    <p>Duration (hh:mm)</p>
+                                    <div className="qtyInput">
+                                        <TimeField style={{ width: '120px' }} name="poly_bag_time" value={formData.poly_bag_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>

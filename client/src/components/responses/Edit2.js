@@ -27,7 +27,11 @@ const Edit2 = ({ location: { params: { original } }, history, updateRecord }) =>
         process_returns_qty: original.process_returns_qty,
         process_returns_time: original.process_returns_time,
         audit_locations_qty: original.audit_locations_qty,
-        audit_locations_time: original.audit_locations_time
+        audit_locations_time: original.audit_locations_time,
+        prime_picking_qty: original.prime_picking_qty,
+        prime_picking_time: original.prime_picking_time,
+        poly_bag_qty: original.poly_bag_qty,
+        poly_bag_time: original.poly_bag_time
     });
 
     const renderTitle = 'Edit Response';
@@ -95,6 +99,12 @@ const Edit2 = ({ location: { params: { original } }, history, updateRecord }) =>
                     <div className="four wide column">Audit Locations</div>
                     <div className="four wide column">Quantity: <input style={{ width: '100px' }} type="text" value={formData.audit_locations_qty} name="audit_locations_qty" onChange={e => onChange(e)} /></div>
                     <div className="eight wide column">Time: <TimeField style={{ width: '100px' }} name="audit_locations_time" value={formData.audit_locations_time} onChange={e => onChange(e)} /></div>
+                    <div className="four wide column">Prime Picking</div>
+                    <div className="four wide column">Quantity: <input style={{ width: '100px' }} type="text" value={formData.prime_picking_qty} name="prime_picking_qty" onChange={e => onChange(e)} /></div>
+                    <div className="eight wide column">Time: <TimeField style={{ width: '100px' }} name="prime_picking_time" value={formData.prime_picking_time} onChange={e => onChange(e)} /></div>
+                    <div className="four wide column">Poly Bag & Packing</div>
+                    <div className="four wide column">Quantity: <input style={{ width: '100px' }} type="text" value={formData.poly_bag_qty} name="poly_bag_qty" onChange={e => onChange(e)} /></div>
+                    <div className="eight wide column">Time: <TimeField style={{ width: '100px' }} name="poly_bag_time" value={formData.poly_bag_time} onChange={e => onChange(e)} /></div>
                 </div>
 
             </form>

@@ -292,21 +292,22 @@ router.post('/update/:id', async (req, res) => {
     process_rapid_qty = ?, process_rapid_time = ?, add_inventory_qty = ?, add_inventory_time = ?, bulk_cases_processed_qty = ?,
     bulk_cases_processed_time = ?, bulk_cases_labeled_qty = ?, bulk_cases_labeled_time = ?, items_labeled_qty = ?,
     items_labeled_time = ?, processed_removal_qty = ?, processed_removal_time = ?, process_returns_qty = ?, process_returns_time = ?,
-    audit_locations_qty = ?, audit_locations_time = ?, process_onsite_qty = ?, process_onsite_time = ?
+    audit_locations_qty = ?, audit_locations_time = ?, prime_picking_qty = ?, prime_picking_time = ?,
+    poly_bag_qty = ?, poly_bag_time = ?
     WHERE id = ?`;
 
     const { process_prime_qty, process_prime_time, process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time,
         bulk_cases_processed_qty, bulk_cases_processed_time, bulk_cases_labeled_qty, bulk_cases_labeled_time,
         items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
         process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time,
-        process_onsite_qty, process_onsite_time
+        prime_picking_qty, prime_picking_time, poly_bag_qty, poly_bag_time
     } = req.body;
 
     const data = [process_prime_qty, process_prime_time, process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time,
         bulk_cases_processed_qty, bulk_cases_processed_time, bulk_cases_labeled_qty, bulk_cases_labeled_time,
         items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
         process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time,
-        process_onsite_qty, process_onsite_time, req.params.id];
+        prime_picking_qty, prime_picking_time, poly_bag_qty, poly_bag_time, req.params.id];
 
     console.log(data);
 
@@ -329,6 +330,7 @@ router.put('/', async (req, res) => {
         case_processed_qty, case_processed_time, case_labeled_qty, case_labeled_time,
         items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
         process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time,
+        prime_picking_qty, prime_picking_time, poly_bag_qty, poly_bag_time,
         taskDate, employee_name, warehouse_location, submitted_date
     } = req.body;
 
@@ -359,6 +361,12 @@ router.put('/', async (req, res) => {
     if (audit_locations_qty > 0 && audit_locations_time === '00:00') {
         errs.push('Audit Locations Time should not be equal to 00:00');
     }
+    if (prime_picking_qty > 0 && prime_picking_time === '00:00') {
+        errs.push('Prime Picking Time should not be equal to 00:00');
+    }
+    if (poly_bag_qty > 0 && poly_bag_time === '00:00') {
+        errs.push('Poly Bag & Packing Time should not be equal to 00:00');
+    }
     if (taskDate === null || taskDate === '') {
         errs.push('Please select a date');
     }
@@ -379,14 +387,16 @@ router.put('/', async (req, res) => {
             process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time, bulk_cases_processed_qty,
             bulk_cases_processed_time, bulk_cases_labeled_qty, bulk_cases_labeled_time, items_labeled_qty,
             items_labeled_time, processed_removal_qty, processed_removal_time, process_returns_qty, process_returns_time,
-            audit_locations_qty, audit_locations_time)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            audit_locations_qty, audit_locations_time, prime_picking_qty, prime_picking_time,
+            poly_bag_qty, poly_bag_time)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         const data = [employee_name, warehouse_location, submitted_date, taskDate, process_prime_qty,
             process_prime_time, process_rapid_qty, process_rapid_time, add_inventory_qty, add_inventory_time,
             case_processed_qty, case_processed_time, case_labeled_qty, case_labeled_time,
             items_labeled_qty, items_labeled_time, processed_removal_qty, processed_removal_time,
-            process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time];
+            process_returns_qty, process_returns_time, audit_locations_qty, audit_locations_time, prime_picking_qty,
+            prime_picking_time, poly_bag_qty, poly_bag_time];
 
         db.query(sql, data, (err, results) => {
             if (err) return res.status(500).json(err);

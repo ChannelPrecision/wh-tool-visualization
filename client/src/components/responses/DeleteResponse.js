@@ -86,6 +86,16 @@ const DeleteResponse = ({ taskRecord, deleteTask, match: { params: { id } }, his
                             <td>{task[0].audit_locations_qty}</td>
                             <td>{task[0].audit_locations_time}</td>
                         </tr>
+                        <tr>
+                            <td>Prime Picking</td>
+                            <td>{task[0].prime_picking_qty}</td>
+                            <td>{task[0].prime_picking_time}</td>
+                        </tr>
+                        <tr>
+                            <td>Poly Bag & Packing</td>
+                            <td>{task[0].poly_bag_qty}</td>
+                            <td>{task[0].poly_bag_time}</td>
+                        </tr>
                     </tbody>
                 </table>
             </Fragment>
