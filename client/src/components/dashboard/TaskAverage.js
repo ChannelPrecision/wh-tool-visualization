@@ -17,6 +17,8 @@ const TaskAverage = ({ dates, taskAverage, resp: { taskAvg, loading } }) => {
         'y': res[1]
     })) : [];
 
+    // console.log(dataValue);
+
     const options = {
         animationEnabled: true,
         theme: "light2",
