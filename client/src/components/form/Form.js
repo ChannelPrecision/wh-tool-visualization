@@ -165,13 +165,13 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                                 <div className="four wide column">
                                     <p>Quantity</p>
                                     <div className="qtyInput">
-                                        <input type="text" placeholder="0" name="bulk_cases_processed_qty" onChange={e => onChange(e)} />
+                                        <input type="text" placeholder="0" name="case_processed_qty" onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="bulk_cases_processed_time" value={formData.bulk_cases_processed_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="case_processed_time" value={formData.case_processed_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
@@ -189,13 +189,13 @@ const Form2 = ({ addTask, auth: { user, loading }, history }) => {
                                 <div className="four wide column">
                                     <p>Quantity</p>
                                     <div className="qtyInput">
-                                        <input type="text" placeholder="0" name="bulk_cases_labeled_qty" onChange={e => onChange(e)} />
+                                        <input type="text" placeholder="0" name="case_labeled_qty" onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                                 <div className="four wide column">
                                     <p>Duration (hh:mm)</p>
                                     <div className="qtyInput">
-                                        <TimeField style={{ width: '120px' }} name="bulk_cases_labeled_time" value={formData.bulk_cases_labeled_time} onChange={e => onChange(e)} />
+                                        <TimeField style={{ width: '120px' }} name="case_labeled_time" value={formData.case_labeled_time} onChange={e => onChange(e)} />
                                     </div>
                                 </div>
                             </div>
