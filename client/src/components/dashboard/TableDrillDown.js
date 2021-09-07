@@ -13,19 +13,29 @@ import 'react-table-hoc-fixed-columns/lib/styles.css';
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
 
 const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, prodByDate, loading } }) => {
-    const [emp, setEmp] = useState('all');
+    // const [emp, setEmp] = useState('all');
+    const [dropdown, setDropdown] = useState({
+        emp: 'all',
+        location: 'all'
+    });
+
+    const { emp, location } = dropdown;
 
     useEffect(() => {
-        getStaff(dates);
-        getProductivity2(dates, emp);
-    }, [dates, emp, loading]);
+        getStaff(dates, location);
+        getProductivity2(dates, emp, location);
+    }, [dates, emp, loading, location]);
 
-    const onChange = e => {
-        setEmp(e.target.value)
-    };
+    // const onChange = e => {
+    //     setEmp(e.target.value)
+    // };
+
+    const onChange = e => setDropdown({ ...dropdown, [e.target.name]: e.target.value });
 
     // console.log(dates[0] + ' ~ ' + dates[1]);
     const options = staff.map((el, index) => <option key={index} value={el.employee_name}>{el.employee_name}</option>);
+
+    console.log(dropdown);
 
     const columns = [
         {
@@ -327,8 +337,15 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
         <Fragment>
             <div className="ui segment">
                 <p><strong>Productivity</strong></p>
-                <label>Staff </label>
-                <select className="ui dropdown selection" style={{ marginBottom: '5px', width: '300px' }} onChange={e => onChange(e)}>
+                <label>Facility: </label>
+                <select className="ui dropdown selection" style={{ marginBottom: '5px', width: '300px' }} name="location" value={location} onChange={e => onChange(e)}>
+                    <option value="all">All</option>
+                    <option value="NC">NC</option>
+                    <option value="UT">UT</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>Staff: </label>
+                <select className="ui dropdown selection" style={{ marginBottom: '5px', width: '300px' }} name="emp" value={emp} onChange={e => onChange(e)}>
                     <option value="all">All</option>
                     {options}
                 </select>

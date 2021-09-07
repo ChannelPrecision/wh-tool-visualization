@@ -21,11 +21,11 @@ import {
     PROD_ONE_DATE
 } from './types';
 
-export const getStaff = date => async dispatch => {
+export const getStaff = (date, loc) => async dispatch => {
     try {
         const startDate = format(date[0], "yyyy-MM-dd");
         const endDate = format(date[1], "yyyy-MM-dd");
-        const res = await axios.post(`/api/responses/staff/${startDate}/${endDate}`);
+        const res = await axios.post(`/api/responses/staff/${startDate}/${endDate}/${loc}`);
 
         dispatch({
             type: GET_STAFF,
@@ -114,11 +114,11 @@ export const getProductivity = (date, emp) => async dispatch => {
     }
 }
 
-export const getProductivity2 = (date, emp) => async dispatch => {
+export const getProductivity2 = (date, emp, loc) => async dispatch => {
     try {
         const startDate = format(date[0], "yyyy-MM-dd");
         const endDate = format(date[1], "yyyy-MM-dd");
-        const res = await axios.post(`/api/responses/productivity2/${startDate}/${endDate}/${emp}`);
+        const res = await axios.post(`/api/responses/productivity2/${startDate}/${endDate}/${emp}/${loc}`);
 
         dispatch({
             type: PROD_BY_DATE,
