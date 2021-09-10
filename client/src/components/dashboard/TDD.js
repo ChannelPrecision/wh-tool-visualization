@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Modal from '../layout/Modal';
+import { Link } from 'react-router-dom';
 
-import { getProductivity3 } from '../../actions/responses';
+import { getStaff, getProductivity2 } from '../../actions/responses';
 
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
@@ -13,10 +12,28 @@ import 'react-table-hoc-fixed-columns/lib/styles.css';
 
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
 
-const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, location } }, getProductivity3, resp: { prodOneDate, loading } }) => {
+const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, prodByDate, loading } }) => {
+    // const [emp, setEmp] = useState('all');
+    const [dropdown, setDropdown] = useState({
+        emp: 'all',
+        location: 'all'
+    });
+
+    const { emp, location } = dropdown;
+
     useEffect(() => {
-        getProductivity3(ddDate, emp, location);
-    }, [loading]);
+        getStaff(dates, location);
+        getProductivity2(dates, emp, location);
+    }, [dates, emp, loading, location]);
+
+    // const onChange = e => {
+    //     setEmp(e.target.value)
+    // };
+
+    const onChange = e => setDropdown({ ...dropdown, [e.target.name]: e.target.value });
+
+    // console.log(dates[0] + ' ~ ' + dates[1]);
+    const options = staff.map((el, index) => <option key={index} value={el.employee_name}>{el.employee_name}</option>);
 
     const columns = [
         {
@@ -24,8 +41,14 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, locat
             "fixed": "left",
             "columns": [
                 {
-                    "Header": "Staff",
-                    "accessor": "employee_name",
+                    "Header": "",
+                    "accessor": "taskDate",
+                    "width": 50,
+                    "Cell": props => <Link to={{ pathname: `view/date/${props.value}/${emp}`, params: props }}><i className='ui external alternate icon black'></i></Link>
+                },
+                {
+                    "Header": "Date",
+                    "accessor": "taskDate",
                     "width": 140
                 }
             ]
@@ -100,7 +123,7 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, locat
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "addInvAvg",
+                    "accessor": "addInventoryAvg",
                     // "aggregate": value => _.round(_.mean(value), 2),
                     "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
@@ -125,7 +148,7 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, locat
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "bulkCasesProcAvg",
+                    "accessor": "bulkCasesAvg",
                     // "aggregate": value => _.round(_.mean(value), 2),
                     "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
@@ -200,7 +223,7 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, locat
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "procRemovalAvg",
+                    "accessor": "processRemovalAvg",
                     // "aggregate": value => _.round(_.mean(value), 2),
                     "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
@@ -225,7 +248,7 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, locat
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "auditLocationAvg",
+                    "accessor": "auditLocationsAvg",
                     // "aggregate": value => _.round(_.mean(value), 2),
                     "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
@@ -250,7 +273,7 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, locat
                 {
                     "Header": "AVG",
                     "width": 60,
-                    "accessor": "procReturnsAvg",
+                    "accessor": "processReturnsAvg",
                     // "aggregate": value => _.round(_.mean(value), 2),
                     "Cell": props => <span>{props.value !== undefined && props.value !== null ? props.value.toFixed(2) : '-'}</span>
                 }
@@ -308,35 +331,44 @@ const ViewProductivityByDate = ({ history, match: { params: { ddDate, emp, locat
         }
     ];
 
-    const renderTitle = <h3>Date: {ddDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Location: {location} </h3>;
-
-    const renderContent = () => (
-        <ReactTableFixedColumns
-            data={prodOneDate}
-            columns={columns}
-            defaultPageSize={10}
-            pageSizeOptions={[10, 25, 50, 100, 150]}
-            className="-striped -highlight"
-        />
-    )
-
     return (
-        <Modal
-            title={renderTitle}
-            content={renderContent()}
-            // actions={renderActions()}
-            onDismiss={() => history.push('/dashboard')}
-        />
+        <Fragment>
+            <div className="ui segment">
+                <p><strong>Productivity</strong></p>
+                <label>Facility: </label>
+                <select className="ui dropdown selection" style={{ marginBottom: '5px', width: '300px' }} name="location" value={location} onChange={e => onChange(e)}>
+                    <option value="all">All</option>
+                    <option value="NC">NC</option>
+                    <option value="UT">UT</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>Staff: </label>
+                <select className="ui dropdown selection" style={{ marginBottom: '5px', width: '300px' }} name="emp" value={emp} onChange={e => onChange(e)}>
+                    <option value="all">All</option>
+                    {options}
+                </select>
+                <ReactTableFixedColumns
+                    // pivotBy={["taskDate", "employee_name"]}
+                    data={prodByDate}
+                    columns={columns}
+                    defaultPageSize={10}
+                    pageSizeOptions={[10, 25, 50, 100, 150]}
+                    className="-striped -highlight"
+                />
+            </div>
+        </Fragment>
     )
 };
 
-ViewProductivityByDate.propTypes = {
-    getProductivity3: PropTypes.func.isRequired,
-    resp: PropTypes.object.isRequired
-}
+EmployeeRecords.propTypes = {
+    getStaff: PropTypes.func.isRequired,
+    getProductivity2: PropTypes.func.isRequired,
+    staff: PropTypes.object.isRequired,
+    prodByDate: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
     resp: state.responses
 });
 
-export default connect(mapStateToProps, { getProductivity3 })(withRouter(ViewProductivityByDate));
+export default connect(mapStateToProps, { getStaff, getProductivity2 })(EmployeeRecords);

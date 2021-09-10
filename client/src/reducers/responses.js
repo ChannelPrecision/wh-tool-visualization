@@ -14,7 +14,8 @@ import {
     ADD_TASK,
     EMP_AVG_PER_EMPLOYEE,
     PROD_BY_DATE,
-    PROD_ONE_DATE
+    PROD_ONE_DATE,
+    PROD_TOTAL
 } from '../actions/types';
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
     productivities: [],
     prodByDate: [],
     prodOneDate: [],
+    prodTotal: [],
     tasks: [],
     task: [],
     taskAvg: [],
@@ -87,6 +89,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 prodOneDate: payload,
+                loading: false
+            }
+        case PROD_TOTAL:
+            return {
+                ...state,
+                prodTotal: payload,
                 loading: false
             }
         case TASK_RECORDS:

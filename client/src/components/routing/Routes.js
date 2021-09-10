@@ -26,7 +26,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/responses" component={Responses} />
                 <PrivateRoute exact path="/response/delete/:id" component={DeleteResponse} />
                 <PrivateRoute exact path="/response/edit/:id" component={EditResponse} />
-                <PrivateRoute exact path="/view/date/:ddDate/:emp" component={ViewProductivityByDate} />
+                <PrivateRoute exact path="/view/date/:ddDate/:emp/:location" component={ViewProductivityByDate} />
                 <Route component={NotFound} />
             </Switch>
         </section>

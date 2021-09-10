@@ -134,6 +134,7 @@ router.post('/productivity2/:startDate/:endDate/:emp/:loc', async (req, res) => 
     try {
         db.query(sql, (err, results) => {
             if (err) return res.status(500).json(err);
+            // console.log(results);
             res.status(200).json(results);
         })
     } catch (err) {
@@ -142,9 +143,99 @@ router.post('/productivity2/:startDate/:endDate/:emp/:loc', async (req, res) => 
     }
 });
 
+//get sum and average to all
+router.post('/productivity4/:startDate/:endDate/:emp/:loc', async (req, res) => {
+    const allEmpAllLoc = `select DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate, 
+    sum(process_prime_qty) / (sum(time_to_sec(process_prime_time) / (60 * 60))) as processPrimeAvg, sum(process_rapid_qty) / (sum(time_to_sec(process_rapid_time) / (60 * 60))) as processRapidAvg,
+    sum(add_inventory_qty) / (sum(time_to_sec(add_inventory_time) / (60 * 60))) as addInventoryAvg, sum(bulk_cases_processed_qty) / (sum(time_to_sec(bulk_cases_processed_time) / (60 * 60))) as bulkCasesAvg,
+    sum(bulk_cases_labeled_qty) / (sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60))) as bulkCasesLabeledAvg, sum(items_labeled_qty) / (sum(time_to_sec(items_labeled_time) / (60 * 60))) as itemsLabeledAvg,
+    sum(processed_removal_qty) / (sum(time_to_sec(processed_removal_time) / (60 * 60))) as processRemovalAvg, sum(process_returns_qty) / (sum(time_to_sec(process_returns_time) / (60 * 60))) as processReturnsAvg,
+    sum(audit_locations_qty) / (sum(time_to_sec(audit_locations_time) / (60 * 60))) as auditLocationsAvg, sum(prime_picking_qty) / (sum(time_to_sec(prime_picking_time) / (60 * 60))) as primePickingAvg,
+    sum(poly_bag_qty) / (sum(time_to_sec(poly_bag_time) / (60 * 60))) as polyBagAvg
+    from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' group by taskDate order by DATE_FORMAT(task_date, "%Y%m%d") desc`
+
+    const oneEmpAllLoc = `select DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate, 
+    sum(process_prime_qty) / (sum(time_to_sec(process_prime_time) / (60 * 60))) as processPrimeAvg, sum(process_rapid_qty) / (sum(time_to_sec(process_rapid_time) / (60 * 60))) as processRapidAvg,
+    sum(add_inventory_qty) / (sum(time_to_sec(add_inventory_time) / (60 * 60))) as addInventoryAvg, sum(bulk_cases_processed_qty) / (sum(time_to_sec(bulk_cases_processed_time) / (60 * 60))) as bulkCasesAvg,
+    sum(bulk_cases_labeled_qty) / (sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60))) as bulkCasesLabeledAvg, sum(items_labeled_qty) / (sum(time_to_sec(items_labeled_time) / (60 * 60))) as itemsLabeledAvg,
+    sum(processed_removal_qty) / (sum(time_to_sec(processed_removal_time) / (60 * 60))) as processRemovalAvg, sum(process_returns_qty) / (sum(time_to_sec(process_returns_time) / (60 * 60))) as processReturnsAvg,
+    sum(audit_locations_qty) / (sum(time_to_sec(audit_locations_time) / (60 * 60))) as auditLocationsAvg, sum(prime_picking_qty) / (sum(time_to_sec(prime_picking_time) / (60 * 60))) as primePickingAvg,
+    sum(poly_bag_qty) / (sum(time_to_sec(poly_bag_time) / (60 * 60))) as polyBagAvg
+    from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' and employee_name = '${req.params.emp}' group by taskDate order by DATE_FORMAT(task_date, "%Y%m%d") desc`;
+
+    const allEmpOneLoc = `select DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate, 
+    sum(process_prime_qty) / (sum(time_to_sec(process_prime_time) / (60 * 60))) as processPrimeAvg, sum(process_rapid_qty) / (sum(time_to_sec(process_rapid_time) / (60 * 60))) as processRapidAvg,
+    sum(add_inventory_qty) / (sum(time_to_sec(add_inventory_time) / (60 * 60))) as addInventoryAvg, sum(bulk_cases_processed_qty) / (sum(time_to_sec(bulk_cases_processed_time) / (60 * 60))) as bulkCasesAvg,
+    sum(bulk_cases_labeled_qty) / (sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60))) as bulkCasesLabeledAvg, sum(items_labeled_qty) / (sum(time_to_sec(items_labeled_time) / (60 * 60))) as itemsLabeledAvg,
+    sum(processed_removal_qty) / (sum(time_to_sec(processed_removal_time) / (60 * 60))) as processRemovalAvg, sum(process_returns_qty) / (sum(time_to_sec(process_returns_time) / (60 * 60))) as processReturnsAvg,
+    sum(audit_locations_qty) / (sum(time_to_sec(audit_locations_time) / (60 * 60))) as auditLocationsAvg, sum(prime_picking_qty) / (sum(time_to_sec(prime_picking_time) / (60 * 60))) as primePickingAvg,
+    sum(poly_bag_qty) / (sum(time_to_sec(poly_bag_time) / (60 * 60))) as polyBagAvg
+    from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' and warehouse_location ='${req.params.loc}' 
+    group by taskDate order by DATE_FORMAT(task_date, "%Y%m%d") desc`;
+
+    const oneEmpOneLoc = `select DATE_FORMAT(task_date, "%Y-%m-%d") as taskDate, 
+    sum(process_prime_qty) / (sum(time_to_sec(process_prime_time) / (60 * 60))) as processPrimeAvg, sum(process_rapid_qty) / (sum(time_to_sec(process_rapid_time) / (60 * 60))) as processRapidAvg,
+    sum(add_inventory_qty) / (sum(time_to_sec(add_inventory_time) / (60 * 60))) as addInventoryAvg, sum(bulk_cases_processed_qty) / (sum(time_to_sec(bulk_cases_processed_time) / (60 * 60))) as bulkCasesAvg,
+    sum(bulk_cases_labeled_qty) / (sum(time_to_sec(bulk_cases_labeled_time) / (60 * 60))) as bulkCasesLabeledAvg, sum(items_labeled_qty) / (sum(time_to_sec(items_labeled_time) / (60 * 60))) as itemsLabeledAvg,
+    sum(processed_removal_qty) / (sum(time_to_sec(processed_removal_time) / (60 * 60))) as processRemovalAvg, sum(process_returns_qty) / (sum(time_to_sec(process_returns_time) / (60 * 60))) as processReturnsAvg,
+    sum(audit_locations_qty) / (sum(time_to_sec(audit_locations_time) / (60 * 60))) as auditLocationsAvg, sum(prime_picking_qty) / (sum(time_to_sec(prime_picking_time) / (60 * 60))) as primePickingAvg,
+    sum(poly_bag_qty) / (sum(time_to_sec(poly_bag_time) / (60 * 60))) as polyBagAvg
+    from efficiency_report.responses where task_date <= '${req.params.endDate}' and task_date >= '${req.params.startDate}' and employee_name = '${req.params.emp}' and warehouse_location ='${req.params.loc}' 
+    group by taskDate order by DATE_FORMAT(task_date, "%Y%m%d") desc`;
+
+    // const sql = req.params.emp === 'all' ? allEmp : oneEmp;
+    let sql = '';
+
+    const getTotals = (data, key) => {
+        let total = 0;
+        let count = 0;
+        data.forEach(item => {
+            total += item[key];
+            // console.log(item[key]);
+            item[key] !== null ? count++ : '';
+        });
+        return total / count;
+    };
+
+    if (req.params.emp === 'all' && req.params.loc === 'all') {
+        sql = allEmpAllLoc;
+    } else if (req.params.emp === 'all' && req.params.loc !== 'all') {
+        sql = allEmpOneLoc;
+    } else if (req.params.emp !== 'all' && req.params.loc === 'all') {
+        sql = oneEmpAllLoc;
+    } else {
+        sql = oneEmpOneLoc;
+    }
+
+    try {
+        db.query(sql, (err, results) => {
+            if (err) return res.status(500).json(err);
+            results.unshift({
+                taskDate: "AVG",
+                processPrimeAvg: getTotals(results, "processPrimeAvg"),
+                processRapidAvg: getTotals(results, "processRapidAvg"),
+                addInventoryAvg: getTotals(results, "addInventoryAvg"),
+                bulkCasesAvg: getTotals(results, "bulkCasesAvg"),
+                bulkCasesLabeledAvg: getTotals(results, "bulkCasesLabeledAvg"),
+                itemsLabeledAvg: getTotals(results, "itemsLabeledAvg"),
+                processRemovalAvg: getTotals(results, "processRemovalAvg"),
+                processReturnsAvg: getTotals(results, "processReturnsAvg"),
+                auditLocationsAvg: getTotals(results, "auditLocationsAvg"),
+                primePickingAvg: getTotals(results, "primePickingAvg"),
+                polyBagAvg: getTotals(results, "polyBagAvg")
+            });
+            // console.log(results.slice(0, 1));
+            res.status(200).json(results.slice(0, 1));
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 //productivity for one date
-router.post('/productivity3/:drillDownDate/:emp', async (req, res) => {
-    const allEmp = `select employee_name, process_prime_qty, time_to_sec(process_prime_time) / (60 * 60) as process_prime_time, process_rapid_qty, time_to_sec(process_rapid_time) / (60 * 60) as process_rapid_time,
+router.post('/productivity3/:drillDownDate/:emp/:location', async (req, res) => {
+    const allEmpAllLoc = `select employee_name, process_prime_qty, time_to_sec(process_prime_time) / (60 * 60) as process_prime_time, process_rapid_qty, time_to_sec(process_rapid_time) / (60 * 60) as process_rapid_time,
     add_inventory_qty, time_to_sec(add_inventory_time) / (60 * 60) as add_inventory_time, bulk_cases_processed_qty, time_to_sec(bulk_cases_processed_time) / (60 * 60) as bulk_cases_processed_time, bulk_cases_labeled_qty, time_to_sec(bulk_cases_labeled_time) / (60 * 60) as bulk_cases_labeled_time,
     items_labeled_qty, time_to_sec(items_labeled_time) / (60 * 60) as items_labeled_time, processed_removal_qty, time_to_sec(processed_removal_time) / (60 * 60) as processed_removal_time, process_returns_qty, time_to_sec(process_returns_time) / (60 * 60) as process_returns_time, audit_locations_qty,
     time_to_sec(audit_locations_time) / (60 * 60) as audit_locations_time, 
@@ -155,7 +246,7 @@ router.post('/productivity3/:drillDownDate/:emp', async (req, res) => {
     poly_bag_qty, time_to_sec(poly_bag_time) / (60 * 60) as poly_bag_time, poly_bag_qty/(time_to_sec(poly_bag_time) / (60 * 60)) as polyBagAvg
     from efficiency_report.responses where task_date = '${req.params.drillDownDate}'`;
 
-    const oneEmp = `select employee_name, process_prime_qty, time_to_sec(process_prime_time) / (60 * 60) as process_prime_time, process_rapid_qty, time_to_sec(process_rapid_time) / (60 * 60) as process_rapid_time,
+    const oneEmpAllLoc = `select employee_name, process_prime_qty, time_to_sec(process_prime_time) / (60 * 60) as process_prime_time, process_rapid_qty, time_to_sec(process_rapid_time) / (60 * 60) as process_rapid_time,
     add_inventory_qty, time_to_sec(add_inventory_time) / (60 * 60) as add_inventory_time, bulk_cases_processed_qty, time_to_sec(bulk_cases_processed_time) / (60 * 60) as bulk_cases_processed_time, bulk_cases_labeled_qty, time_to_sec(bulk_cases_labeled_time) / (60 * 60) as bulk_cases_labeled_time,
     items_labeled_qty, time_to_sec(items_labeled_time) / (60 * 60) as items_labeled_time, processed_removal_qty, time_to_sec(processed_removal_time) / (60 * 60) as processed_removal_time, process_returns_qty, time_to_sec(process_returns_time) / (60 * 60) as process_returns_time, audit_locations_qty,
     time_to_sec(audit_locations_time) / (60 * 60) as audit_locations_time,
@@ -166,7 +257,27 @@ router.post('/productivity3/:drillDownDate/:emp', async (req, res) => {
     poly_bag_qty, time_to_sec(poly_bag_time) / (60 * 60) as poly_bag_time, poly_bag_qty/(time_to_sec(poly_bag_time) / (60 * 60)) as polyBagAvg
     from efficiency_report.responses where task_date = '${req.params.drillDownDate}' and employee_name = '${req.params.emp}'`;
 
-    const sql = req.params.emp === 'all' ? allEmp : oneEmp;
+    const allEmpOneLoc = `select employee_name, process_prime_qty, time_to_sec(process_prime_time) / (60 * 60) as process_prime_time, process_rapid_qty, time_to_sec(process_rapid_time) / (60 * 60) as process_rapid_time,
+    add_inventory_qty, time_to_sec(add_inventory_time) / (60 * 60) as add_inventory_time, bulk_cases_processed_qty, time_to_sec(bulk_cases_processed_time) / (60 * 60) as bulk_cases_processed_time, bulk_cases_labeled_qty, time_to_sec(bulk_cases_labeled_time) / (60 * 60) as bulk_cases_labeled_time,
+    items_labeled_qty, time_to_sec(items_labeled_time) / (60 * 60) as items_labeled_time, processed_removal_qty, time_to_sec(processed_removal_time) / (60 * 60) as processed_removal_time, process_returns_qty, time_to_sec(process_returns_time) / (60 * 60) as process_returns_time, audit_locations_qty,
+    time_to_sec(audit_locations_time) / (60 * 60) as audit_locations_time, 
+    process_prime_qty/(time_to_sec(process_prime_time) / (60 * 60)) as processPrimeAvg, process_rapid_qty/(time_to_sec(process_rapid_time) / (60 * 60)) as processRapidAvg, add_inventory_qty/(time_to_sec(add_inventory_time) / (60 * 60)) as addInvAvg,
+    bulk_cases_processed_qty/(time_to_sec(bulk_cases_processed_time) / (60 * 60)) as bulkCasesProcAvg, bulk_cases_labeled_qty/(time_to_sec(bulk_cases_labeled_time) / (60 * 60)) as bulkCasesLabeledAvg, items_labeled_qty/(time_to_sec(items_labeled_time) / (60 * 60)) as itemsLabeledAvg,
+    processed_removal_qty/(time_to_sec(processed_removal_time) / (60 * 60)) as procRemovalAvg, process_returns_qty/(time_to_sec(process_returns_time) / (60 * 60)) as procReturnsAvg, audit_locations_qty/(time_to_sec(audit_locations_time) / (60 * 60)) as auditLocationAvg,
+    prime_picking_qty, time_to_sec(prime_picking_time) / (60 * 60) as prime_picking_time, prime_picking_qty/(time_to_sec(prime_picking_time) / (60 * 60)) as primePickingAvg,
+    poly_bag_qty, time_to_sec(poly_bag_time) / (60 * 60) as poly_bag_time, poly_bag_qty/(time_to_sec(poly_bag_time) / (60 * 60)) as polyBagAvg
+    from efficiency_report.responses where task_date = '${req.params.drillDownDate}' and warehouse_location = '${req.params.location}'`;
+
+    // const sql = req.params.emp === 'all' ? allEmp : oneEmp;
+    let sql = '';
+
+    if (req.params.emp === 'all' && req.params.location === 'all') {
+        sql = allEmpAllLoc;
+    } else if (req.params.emp === 'all' && req.params.location !== 'all') {
+        sql = allEmpOneLoc;
+    } else {
+        sql = oneEmpAllLoc;
+    }
 
     try {
         db.query(sql, (err, results) => {

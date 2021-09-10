@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { getStaff, getProductivity2 } from '../../actions/responses';
+import { getStaff, getProductivity2, getProductivity4 } from '../../actions/responses';
 
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
@@ -12,7 +12,7 @@ import 'react-table-hoc-fixed-columns/lib/styles.css';
 
 const ReactTableFixedColumns = withFixedColumns(ReactTable);
 
-const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, prodByDate, loading } }) => {
+const EmployeeRecords = ({ dates, getStaff, getProductivity2, getProductivity4, resp: { staff, prodByDate, prodTotal, loading } }) => {
     // const [emp, setEmp] = useState('all');
     const [dropdown, setDropdown] = useState({
         emp: 'all',
@@ -24,6 +24,7 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
     useEffect(() => {
         getStaff(dates, location);
         getProductivity2(dates, emp, location);
+        getProductivity4(dates, emp, location);
     }, [dates, emp, loading, location]);
 
     // const onChange = e => {
@@ -35,7 +36,14 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
     // console.log(dates[0] + ' ~ ' + dates[1]);
     const options = staff.map((el, index) => <option key={index} value={el.employee_name}>{el.employee_name}</option>);
 
-    console.log(dropdown);
+    // const getTotals = (data, key) => {
+    //     let total = 0;
+    //     data.forEach(item => {
+    //         total += item[key];
+    //     });
+    //     return total;
+    // };
+    const mergeData = [...prodTotal, ...prodByDate];
 
     const columns = [
         {
@@ -46,7 +54,11 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
                     "Header": "",
                     "accessor": "taskDate",
                     "width": 50,
-                    "Cell": props => <Link to={{ pathname: `view/date/${props.value}/${emp}`, params: props }}><i className='ui external alternate icon black'></i></Link>
+                    "Cell": props => (
+                        props.value !== 'AVG' ?
+                            <Link to={{ pathname: `view/date/${props.value}/${emp}/${location}`, params: props }}><i className='ui external alternate icon black'></i></Link>
+                            : ''
+                    )
                 },
                 {
                     "Header": "Date",
@@ -351,7 +363,7 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
                 </select>
                 <ReactTableFixedColumns
                     // pivotBy={["taskDate", "employee_name"]}
-                    data={prodByDate}
+                    data={mergeData}
                     columns={columns}
                     defaultPageSize={10}
                     pageSizeOptions={[10, 25, 50, 100, 150]}
@@ -365,12 +377,14 @@ const EmployeeRecords = ({ dates, getStaff, getProductivity2, resp: { staff, pro
 EmployeeRecords.propTypes = {
     getStaff: PropTypes.func.isRequired,
     getProductivity2: PropTypes.func.isRequired,
+    getProductivity4: PropTypes.func.isRequired,
     staff: PropTypes.object.isRequired,
-    prodByDate: PropTypes.object.isRequired
+    prodByDate: PropTypes.object.isRequired,
+    prodTotal: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     resp: state.responses
 });
 
-export default connect(mapStateToProps, { getStaff, getProductivity2 })(EmployeeRecords);
+export default connect(mapStateToProps, { getStaff, getProductivity2, getProductivity4 })(EmployeeRecords);
